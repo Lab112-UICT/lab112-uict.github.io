@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Courses — LAB 112</title>
+  <style>
+    :root {
+      --navy:#0a1628;--navy-mid:#112240;--navy-light:#1d3461;
+      --amber:#f0a500;--amber-light:#ffc94a;--cream:#f5ede0;
+      --teal:#0d9488;--teal-light:#14b8a6;--text-dim:#8899aa;
+      --card-bg:rgba(17,34,64,0.7);--border:rgba(240,165,0,0.2);
+      --font-display:'Syne',sans-serif;--font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background-color:var(--navy);color:var(--cream);font-family:var(--font-body);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(13,148,136,0.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(240,165,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(240,165,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(240,165,0,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+    /* NAVBAR */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(10,22,40,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--amber);letter-spacing:2px;text-decoration:none;}
+    .nav-logo span{color:var(--cream);font-weight:400;}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{text-decoration:none;font-family:var(--font-body);font-size:0.85rem;font-weight:500;color:var(--text-dim);letter-spacing:0.5px;transition:color 0.2s;text-transform:uppercase;}
+    .nav-links a:hover,.nav-links a.active{color:var(--amber);}
+    .nav-cta{background:var(--amber);color:var(--navy)!important;padding:0.4rem 1rem;border-radius:4px;font-weight:700!important;}
+    .nav-cta:hover{background:var(--amber-light)!important;color:var(--navy)!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--cream);transition:all 0.3s;border-radius:2px;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    .mobile-nav{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:99;padding:1.5rem 2rem;flex-direction:column;gap:0;transform:translateY(-110%);transition:transform 0.3s ease;}
+    .mobile-nav.open{transform:translateY(0);}
+    .mobile-nav a{display:block;padding:1rem 0;text-decoration:none;font-size:1rem;color:var(--text-dim);border-bottom:1px solid var(--border);transition:color 0.2s;}
+    .mobile-nav a:last-child{border-bottom:none;}
+    .mobile-nav a:hover{color:var(--amber);}
+
+    /* PAGE */
+    .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:6rem 2rem 4rem;}
+    .page-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--teal-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .page-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal-light);}
+    .page-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
+    .page-title span{color:var(--amber);}
+    .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;max-width:520px;margin-bottom:3rem;}
+
+    /* COURSE BLOCK */
+    .course-block{margin-bottom:2.5rem;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;backdrop-filter:blur(8px);}
+    .course-header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 1.75rem;cursor:pointer;gap:1rem;transition:background 0.2s;}
+    .course-header:hover{background:rgba(240,165,0,0.05);}
+    .course-header-left{display:flex;align-items:center;gap:1rem;}
+    .course-num{font-family:var(--font-mono);font-size:0.7rem;color:var(--teal-light);letter-spacing:2px;}
+    .course-title{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--cream);}
+    .course-icon{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);color:var(--amber);flex-shrink:0;}
+    .chevron{color:var(--text-dim);transition:transform 0.3s;font-size:1rem;}
+    .course-block.open .chevron{transform:rotate(180deg);}
+
+    .course-body{display:none;padding:0 1.75rem 1.75rem;}
+    .course-block.open .course-body{display:block;}
+
+    .outline-title{font-family:var(--font-mono);font-size:0.7rem;color:var(--teal-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;padding-top:0.5rem;border-top:1px solid var(--border);}
+
+    .topic-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.5rem;}
+    .topic-list li{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.875rem;color:var(--text-dim);line-height:1.5;}
+    .topic-list li::before{content:'→';color:var(--amber);flex-shrink:0;margin-top:0.05rem;}
+
+    .course-actions{display:flex;gap:0.75rem;flex-wrap:wrap;}
+    .btn-sm{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;border-radius:5px;font-size:0.8rem;font-family:var(--font-display);font-weight:700;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;}
+    .btn-sm-amber{background:rgba(240,165,0,0.12);color:var(--amber);border:1px solid rgba(240,165,0,0.3);}
+    .btn-sm-amber:hover{background:rgba(240,165,0,0.2);}
+    .btn-sm-teal{background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.25);}
+    .btn-sm-teal:hover{background:rgba(13,148,136,0.2);}
+
+    footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.78rem;color:var(--text-dim);}
+
+    @media(max-width:768px){
+      .nav-links{display:none;}
+      .hamburger{display:flex;}
+      .mobile-nav{display:flex;}
+      .page-wrap{padding:5rem 1.25rem 3rem;}
+      .course-header{padding:1.25rem;}
+      .course-body{padding:0 1.25rem 1.25rem;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
+    <ul class="nav-links">
+      <li><a href="HomePage.html">Home</a></li>
+      <li><a href="Courses.html" class="active">Courses</a></li>
+      <li><a href="Notes.html">Notes</a></li>
+      <li><a href="PDFs.html">PDFs</a></li>
+      <li><a href="Calendar.html">Calendar</a></li>
+      <li><a href="login.html" class="nav-cta">Login</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="HomePage.html">Home</a><a href="Courses.html">Courses</a><a href="Notes.html">Notes</a><a href="PDFs.html">PDFs</a><a href="Calendar.html">Calendar</a><a href="login.html">Login</a>
+  </div>
+
+  <div class="page-wrap">
+    <p class="page-eyebrow">PCSE Programme</p>
+    <h1 class="page-title">Course <span>Outlines</span></h1>
+    <p class="page-sub">Click any course to expand its outline, topics, and quick links to notes and PDFs.</p>
+
+    <!-- C# Programming -->
+    <div class="course-block open" id="c-programming">
+      <div class="course-header" onclick="toggleCourse(this)">
+        <div class="course-header-left">
+          <div class="course-icon"><i class="bi bi-braces"></i></div>
+          <div>
+            <div class="course-num">COURSE 01</div>
+            <div class="course-title">C# Programming</div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-down chevron"></i>
+      </div>
+      <div class="course-body">
+        <div class="outline-title">Topics Covered</div>
+      <ul class="topic-list">
+        <li>Introduction to C# — Language features and Visual Studio IDE [cite: 11]</li>
+        <li>Variables and Data Types — Keywords, escape sequences, and I/O [cite: 11, 12]</li>
+        <li>Statements and Operators — Expressions and data conversions [cite: 12]</li>
+        <li>C# Programming Constructs — Selection, loops, and jump statements [cite: 12]</li>
+        <li>Classes and Methods — Overloading, constructors, and destructors [cite: 12]</li>
+        <li>Inheritance and Polymorphism — Method overriding and sealed classes [cite: 12]</li>
+        <li>Abstract Classes and Interfaces — Implementation and comparisons [cite: 12]</li>
+        <li>Properties and Indexers — Fields, methods, and indexers [cite: 12]</li>
+        <li>Generics and Iterators — Creating and using generic types [cite: 12]</li>
+        <li>Exception Handling — Throwing, catching, and custom exceptions [cite: 12]</li>
+      </ul>
+        <div class="course-actions">
+          <a href="Notes.html#c-programming" class="btn-sm btn-sm-amber"><i class="bi bi-journal-text"></i> View Notes</a>
+          <a href="PDFs.html#c-programming" class="btn-sm btn-sm-teal"><i class="bi bi-file-earmark-pdf"></i> Course PDFs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAVA Programming -->
+    <div class="course-block" id="web-design">
+      <div class="course-header" onclick="toggleCourse(this)">
+        <div class="course-header-left">
+          <div class="course-icon"><i class="bi bi-code-slash"></i></div>
+          <div>
+            <div class="course-num">COURSE 02</div>
+            <div class="course-title">JAVA Programming</div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-down chevron"></i>
+      </div>
+      <div class="course-body">
+        <div class="outline-title">Topics Covered</div>
+        <ul class="topic-list">
+          <li>Introduction to the Web — how browsers work, HTTP basics</li>
+          <li>HTML5 — semantic elements, forms, media</li>
+          <li>CSS3 — selectors, box model, flexbox, grid</li>
+          <li>Responsive design and media queries</li>
+          <li>Introduction to JavaScript — DOM manipulation</li>
+          <li>Web accessibility and best practices</li>
+          <li>Introduction to UI/UX principles</li>
+          <li>Hosting and deploying a website</li>
+        </ul>
+        <div class="course-actions">
+          <a href="Notes.html#web-design" class="btn-sm btn-sm-amber"><i class="bi bi-journal-text"></i> View Notes</a>
+          <a href="PDFs.html#web-design" class="btn-sm btn-sm-teal"><i class="bi bi-file-earmark-pdf"></i> Course PDFs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Entreprenuership Skills -->
+    <div class="course-block" id="database">
+      <div class="course-header" onclick="toggleCourse(this)">
+        <div class="course-header-left">
+          <div class="course-icon"><i class="bi bi-database"></i></div>
+          <div>
+            <div class="course-num">COURSE 03</div>
+            <div class="course-title">Entreprenuership Skills</div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-down chevron"></i>
+      </div>
+      <div class="course-body">
+        <div class="outline-title">Topics Covered</div>
+      <ul class="topic-list">
+          <li>Introduction — Basic concepts, reasons for study, and qualities of an entrepreneur [cite: 177]</li>
+          <li>Entrepreneurial Process — Classification of entrepreneurs and the step-by-step process [cite: 177]</li>
+          <li>Creativity — Definitions, importance, and overcoming barriers to creativity [cite: 178, 179]</li>
+          <li>Innovation — Attributes of a good innovator, types, and sources of innovation [cite: 179]</li>
+          <li>Small & Medium Enterprises (SMEs) — Sources of business ideas and capital for SMEs [cite: 179]</li>
+          <li>Business Challenges — Characteristics and challenges faced by small businesses in Uganda [cite: 179]</li>
+          <li>Business Planning — Components, importance, and challenges of creating a business plan [cite: 179]</li>
+          <li>Entrepreneurship Ethics — The role of ethics and common ethical challenges for entrepreneurs [cite: 179]</li>
+      </ul>
+        <div class="course-actions">
+          <a href="Notes.html#database" class="btn-sm btn-sm-amber"><i class="bi bi-journal-text"></i> View Notes</a>
+          <a href="PDFs.html#database" class="btn-sm btn-sm-teal"><i class="bi bi-file-earmark-pdf"></i> Course PDFs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Computer Hardware -->
+    <div class="course-block" id="networking">
+      <div class="course-header" onclick="toggleCourse(this)">
+        <div class="course-header-left">
+          <div class="course-icon"><i class="bi bi-diagram-3"></i></div>
+          <div>
+            <div class="course-num">COURSE 04</div>
+            <div class="course-title">Computer Hardware</div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-down chevron"></i>
+      </div>
+      <div class="course-body">
+        <div class="outline-title">Topics Covered</div>
+        <ul class="topic-list">
+          <li>System Unit Components — Chassis, Motherboard, and CPU [cite: 27, 39]</li>
+          <li>Primary and Secondary Storage — RAM vs. Hard Disk functions [cite: 38, 39]</li>
+          <li>Input and Output Devices — Pointing devices, keyboards, and speakers [cite: 22, 27]</li>
+          <li>Computer Memory Concepts — ROM, Firmware, and Binary systems [cite: 23, 28, 41]</li>
+          <li>System Architecture — Arithmetic Logic Unit (ALU) and Control Units [cite: 23, 36]</li>
+          <li>Hardware Interfacing — USB ports and expansion card installation [cite: 23, 39]</li>
+          <li>Information Processing Cycle — Input, Process, Output, and Storage [cite: 35]</li>
+          <li>Hardware Maintenance — Temperature control and safe lab procedures [cite: 52]</li>
+        </ul>
+        <div class="course-actions">
+          <a href="Notes.html#networking" class="btn-sm btn-sm-amber"><i class="bi bi-journal-text"></i> View Notes</a>
+          <a href="PDFs.html#networking" class="btn-sm btn-sm-teal"><i class="bi bi-file-earmark-pdf"></i> Course PDFs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-life Project II -->
+    <div class="course-block" id="systems">
+      <div class="course-header" onclick="toggleCourse(this)">
+        <div class="course-header-left">
+          <div class="course-icon"><i class="bi bi-cpu"></i></div>
+          <div>
+            <div class="course-num">COURSE 05</div>
+            <div class="course-title">Real-life Project II</div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-down chevron"></i>
+      </div>
+      <div class="course-body">
+        <div class="outline-title">Topics Covered</div>
+        <ul class="topic-list">
+          <li>Introduction to systems analysis and design</li>
+          <li>Software Development Life Cycle (SDLC)</li>
+          <li>Requirements gathering and documentation</li>
+          <li>Data Flow Diagrams (DFD)</li>
+          <li>Use case diagrams and UML basics</li>
+          <li>System design — logical vs physical</li>
+          <li>Testing methodologies</li>
+          <li>Project management basics</li>
+        </ul>
+        <div class="course-actions">
+          <a href="Notes.html#systems" class="btn-sm btn-sm-amber"><i class="bi bi-journal-text"></i> View Notes</a>
+          <a href="PDFs.html#systems" class="btn-sm btn-sm-teal"><i class="bi bi-file-earmark-pdf"></i> Course PDFs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Uganda Institute of Information Communication and Technology · LAB 112 · PCSE 2025</footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); } });
+
+    function toggleCourse(header) {
+      const block = header.closest('.course-block');
+      block.classList.toggle('open');
+    }
+
+    // Auto-open from URL hash
+    const hash = window.location.hash;
+    if (hash) {
+      const target = document.querySelector(hash);
+      if (target) { target.classList.add('open'); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    }
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  </script>
+</body>
+</html>

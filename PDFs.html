@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>PDF Library — LAB 112</title>
+  <style>
+    :root{--navy:#0a1628;--amber:#f0a500;--amber-light:#ffc94a;--cream:#f5ede0;--teal:#0d9488;--teal-light:#14b8a6;--text-dim:#8899aa;--card-bg:rgba(17,34,64,0.7);--border:rgba(240,165,0,0.2);--font-display:'Syne',sans-serif;--font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{background-color:var(--navy);color:var(--cream);font-family:var(--font-body);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(13,148,136,0.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(240,165,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(240,165,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(240,165,0,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(10,22,40,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--amber);letter-spacing:2px;text-decoration:none;}
+    .nav-logo span{color:var(--cream);font-weight:400;}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:0.85rem;font-weight:500;color:var(--text-dim);letter-spacing:0.5px;transition:color 0.2s;text-transform:uppercase;}
+    .nav-links a:hover,.nav-links a.active{color:var(--amber);}
+    .nav-cta{background:var(--amber);color:var(--navy)!important;padding:0.4rem 1rem;border-radius:4px;font-weight:700!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--cream);transition:all 0.3s;border-radius:2px;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    .mobile-nav{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:99;padding:1.5rem 2rem;flex-direction:column;transform:translateY(-110%);transition:transform 0.3s ease;}
+    .mobile-nav.open{transform:translateY(0);}
+    .mobile-nav a{display:block;padding:1rem 0;text-decoration:none;font-size:1rem;color:var(--text-dim);border-bottom:1px solid var(--border);}
+    .mobile-nav a:last-child{border-bottom:none;}
+    .mobile-nav a:hover{color:var(--amber);}
+    .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:6rem 2rem 4rem;}
+    .page-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--teal-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .page-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal-light);}
+    .page-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
+    .page-title span{color:var(--amber);}
+    .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;}
+
+    /* FILTER TABS */
+    .filter-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+    .tab{background:var(--card-bg);border:1px solid var(--border);border-radius:5px;padding:0.4rem 1rem;font-size:0.8rem;font-family:var(--font-display);font-weight:600;color:var(--text-dim);cursor:pointer;transition:all 0.2s;}
+    .tab.active,.tab:hover{background:rgba(240,165,0,0.12);border-color:rgba(240,165,0,0.4);color:var(--amber);}
+
+    /* PDF GROUP */
+    .pdf-group{margin-bottom:2.5rem;scroll-margin-top:84px;}
+    .pdf-group-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
+    .pdf-group-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);color:var(--amber);}
+    .pdf-group-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;}
+    .pdf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.85rem;}
+
+    /* PDF CARD */
+    .pdf-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem;display:flex;flex-direction:column;gap:0.75rem;backdrop-filter:blur(8px);transition:all 0.2s;}
+    .pdf-card:hover{border-color:rgba(240,165,0,0.4);transform:translateY(-2px);}
+    .pdf-card-top{display:flex;align-items:flex-start;gap:0.75rem;}
+    .pdf-icon{width:36px;height:44px;background:rgba(220,50,50,0.15);border:1px solid rgba(220,50,50,0.25);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fb7185;flex-shrink:0;}
+    .pdf-info{flex:1;min-width:0;}
+    .pdf-name{font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--cream);word-break:break-word;margin-bottom:0.2rem;}
+    .pdf-meta{font-size:0.75rem;color:var(--text-dim);}
+    .pdf-tag{display:inline-block;font-family:var(--font-mono);font-size:0.6rem;padding:0.1rem 0.45rem;border-radius:3px;letter-spacing:1px;text-transform:uppercase;background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.2);}
+    .pdf-actions{display:flex;gap:0.5rem;}
+    .pdf-btn{display:inline-flex;align-items:center;gap:0.3rem;padding:0.4rem 0.85rem;border-radius:4px;font-size:0.75rem;font-family:var(--font-display);font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all 0.2s;}
+    .pdf-btn-view{background:rgba(240,165,0,0.12);color:var(--amber);border:1px solid rgba(240,165,0,0.25);}
+    .pdf-btn-view:hover{background:rgba(240,165,0,0.22);}
+    .pdf-btn-dl{background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.2);}
+    .pdf-btn-dl:hover{background:rgba(13,148,136,0.2);}
+
+    /* UPLOAD HINT */
+    .upload-hint{background:rgba(13,148,136,0.06);border:1px dashed rgba(13,148,136,0.3);border-radius:8px;padding:1.5rem;text-align:center;color:var(--text-dim);font-size:0.85rem;margin-top:1rem;}
+    .upload-hint i{font-size:1.5rem;color:var(--teal-light);margin-bottom:0.5rem;display:block;}
+    .upload-hint strong{color:var(--cream);}
+
+    footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.78rem;color:var(--text-dim);}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}.pdf-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
+    <ul class="nav-links">
+      <li><a href="HomePage.html">Home</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Notes.html">Notes</a></li><li><a href="PDFs.html" class="active">PDFs</a></li><li><a href="Calendar.html">Calendar</a></li><li><a href="login.html" class="nav-cta">Login</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="HomePage.html">Home</a><a href="Courses.html">Courses</a><a href="Notes.html">Notes</a><a href="PDFs.html">PDFs</a><a href="Calendar.html">Calendar</a><a href="login.html">Login</a>
+  </div>
+
+  <div class="page-wrap">
+    <p class="page-eyebrow">Resources</p>
+    <h1 class="page-title">PDF <span>Library</span></h1>
+    <p class="page-sub">All lecture PDFs organised by course. Each file is labelled clearly so you always know what you're opening.</p>
+
+    <div class="filter-tabs">
+      <div class="tab active" onclick="filterPDFs('all', this)">All PDFs</div>
+      <div class="tab" onclick="filterPDFs('c-programming', this)">C# Programming</div>
+      <div class="tab" onclick="filterPDFs('web-design', this)">JAVA Programming</div>
+      <div class="tab" onclick="filterPDFs('database', this)">Entrepreneurship Skills</div>
+      <div class="tab" onclick="filterPDFs('networking', this)">Computer Hardware</div>
+      <div class="tab" onclick="filterPDFs('systems', this)">Real-life Project II</div>
+    </div>
+
+    <!-- C# PROGRAMMING PDFs -->
+    <div class="pdf-group" id="c-programming" data-course="c-programming">
+      <div class="pdf-group-header">
+        <div class="pdf-group-icon"><i class="bi bi-braces"></i></div>
+        <div class="pdf-group-title">C# Programming</div>
+      </div>
+      <div class="pdf-grid">
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">C# Programming — Introduction &amp; Basics</div>
+              <div class="pdf-meta">Week 1 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">C Programming</span>
+          <div class="pdf-actions">
+            <a href="pdfs/c-programming/c-intro.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/c-programming/c-intro.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Pointers &amp; Memory Management</div>
+              <div class="pdf-meta">Week 4 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">C Programming</span>
+          <div class="pdf-actions">
+            <a href="pdfs/c-programming/c-pointers.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/c-programming/c-pointers.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Functions &amp; Recursion</div>
+              <div class="pdf-meta">Week 5 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">C Programming</span>
+          <div class="pdf-actions">
+            <a href="pdfs/c-programming/c-functions.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/c-programming/c-functions.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAVA PROGRAMMING PDFs -->
+    <div class="pdf-group" id="web-design" data-course="web-design">
+      <div class="pdf-group-header">
+        <div class="pdf-group-icon"><i class="bi bi-code-slash"></i></div>
+        <div class="pdf-group-title">JAVA Programming</div>
+      </div>
+      <div class="pdf-grid">
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">HTML5 — Structure &amp; Semantic Elements</div>
+              <div class="pdf-meta">Week 1 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Web Designing</span>
+          <div class="pdf-actions">
+            <a href="pdfs/web-design/html5-intro.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/web-design/html5-intro.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">CSS3 — Layouts &amp; Flexbox</div>
+              <div class="pdf-meta">Week 3 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Web Designing</span>
+          <div class="pdf-actions">
+            <a href="pdfs/web-design/css3-flexbox.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/web-design/css3-flexbox.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTREPRENEURSHIP SKILLS PDFs -->
+    <div class="pdf-group" id="entrepreneurship" data-course="entrepreneurship">
+      <div class="pdf-group-header">
+        <div class="pdf-group-icon"><i class="bi bi-briefcase"></i></div>
+        <div class="pdf-group-title">Entrepreneurship Skills</div>
+      </div>
+      <div class="pdf-grid">
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">SQL Fundamentals — DDL &amp; DML</div>
+              <div class="pdf-meta">Week 2 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Database</span>
+          <div class="pdf-actions">
+            <a href="pdfs/database/sql-basics.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/database/sql-basics.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Normalisation — 1NF to 3NF</div>
+              <div class="pdf-meta">Week 5 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Database</span>
+          <div class="pdf-actions">
+            <a href="pdfs/database/normalisation.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/database/normalisation.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPUTER HARDWARE PDFs -->
+    <div class="pdf-group" id="computer-hardware" data-course="computer-hardware">
+      <div class="pdf-group-header">
+        <div class="pdf-group-icon"><i class="bi bi-diagram-3"></i></div>
+        <div class="pdf-group-title">Computer Hardware</div>
+      </div>
+      <div class="pdf-grid">
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">OSI Model — All 7 Layers</div>
+              <div class="pdf-meta">Week 2 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Networking</span>
+          <div class="pdf-actions">
+            <a href="pdfs/networking/osi-model.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/networking/osi-model.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REAL-LIFE PROJECT II PDFs -->
+    <div class="pdf-group" id="real-life-project-ii" data-course="real-life-project-ii">
+      <div class="pdf-group-header">
+        <div class="pdf-group-icon"><i class="bi bi-cpu"></i></div>
+        <div class="pdf-group-title">Real-life Project II</div>
+      </div>
+      <div class="pdf-grid">
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">SDLC — Models &amp; Phases</div>
+              <div class="pdf-meta">Week 1 · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Systems Analysis</span>
+          <div class="pdf-actions">
+            <a href="pdfs/systems/sdlc.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="pdfs/systems/sdlc.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="upload-hint">
+      <i class="bi bi-folder-plus"></i>
+      <strong>To add your PDFs:</strong> Place your files in a <code>pdfs/[course-name]/</code> folder next to this HTML file, then update the links above to match your file names.
+    </div>
+  </div>
+
+  <footer>Uganda Institute of Information Communication and Technology · LAB 112 · PCSE 2025</footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); }});
+
+    function filterPDFs(course, btn) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.pdf-group').forEach(g => {
+        g.style.display = (course === 'all' || g.dataset.course === course) ? '' : 'none';
+      });
+    }
+
+    const hash = window.location.hash;
+    if (hash) { const t = document.querySelector(hash); if (t) { t.scrollIntoView({behavior:'smooth'}); } }
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  </script>
+</body>
+</html>

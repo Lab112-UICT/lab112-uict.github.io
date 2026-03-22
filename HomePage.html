@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a1628" />
+  <meta name="description" content="UICT LAB 112 - Professional Certificate in Software Engineering Student Portal" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>LAB 112 — UICT PCSE Portal</title>
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #112240;
+      --navy-light: #1d3461;
+      --amber: #f0a500;
+      --amber-light: #ffc94a;
+      --cream: #f5ede0;
+      --cream-dim: #e8d5bc;
+      --teal: #0d9488;
+      --teal-light: #14b8a6;
+      --white: #ffffff;
+      --text-dim: #8899aa;
+      --card-bg: rgba(17, 34, 64, 0.7);
+      --border: rgba(240, 165, 0, 0.2);
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy);
+      color: var(--cream);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ─── BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(13,148,136,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 90% 80%, rgba(240,165,0,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(29,52,97,0.4) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Grid overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(240,165,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(240,165,0,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover { color: var(--amber); }
+    .nav-links a.active { color: var(--amber); }
+
+    .nav-cta {
+      background: var(--amber);
+      color: var(--navy) !important;
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--amber-light) !important; color: var(--navy) !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--cream);
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(10, 22, 40, 0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 0;
+      transform: translateY(-110%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-nav.open { transform: translateY(0); }
+    .mobile-nav a {
+      display: block;
+      padding: 1rem 0;
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--amber); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--teal-light);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--teal-light);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 10vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title .line1 { color: var(--cream); display: block; }
+    .hero-title .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--amber);
+      display: block;
+    }
+    .hero-title .line3 { color: var(--amber); display: block; }
+
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--text-dim);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--amber);
+      color: var(--navy);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn-primary:hover {
+      background: var(--amber-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(240,165,0,0.3);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--cream);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      transform: translateY(-2px);
+    }
+
+    /* Hero stats strip */
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat { display: flex; flex-direction: column; gap: 0.25rem; }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 1.8rem;
+      color: var(--amber);
+      font-weight: 700;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--teal-light);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--teal-light);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span { color: var(--amber); }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── COURSES GRID ─── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .course-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      text-decoration: none;
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.25s;
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .course-card:hover::before { transform: scaleX(1); }
+    .course-card:hover {
+      border-color: rgba(240,165,0,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    .course-icon {
+      width: 44px; height: 44px;
+      background: rgba(240,165,0,0.1);
+      border: 1px solid rgba(240,165,0,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--amber);
+      transition: background 0.2s;
+    }
+    .course-card:hover .course-icon {
+      background: rgba(240,165,0,0.2);
+    }
+
+    .course-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    .course-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .course-arrow {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.2s;
+    }
+    .course-card:hover .course-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ─── FEATURE CARDS ROW ─── */
+    .features-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: all 0.25s;
+      backdrop-filter: blur(8px);
+    }
+
+    .feature-card:hover {
+      border-color: rgba(240,165,0,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .feature-icon-wrap.teal {
+      background: rgba(13,148,136,0.15);
+      color: var(--teal-light);
+      border: 1px solid rgba(13,148,136,0.3);
+    }
+    .feature-icon-wrap.amber {
+      background: rgba(240,165,0,0.12);
+      color: var(--amber);
+      border: 1px solid rgba(240,165,0,0.25);
+    }
+    .feature-icon-wrap.rose {
+      background: rgba(244,63,94,0.1);
+      color: #fb7185;
+      border: 1px solid rgba(244,63,94,0.2);
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .feature-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--amber);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    /* ─── ANNOUNCEMENT STRIP ─── */
+    .announcement {
+      position: relative;
+      z-index: 1;
+      background: rgba(13,148,136,0.08);
+      border-top: 1px solid rgba(13,148,136,0.2);
+      border-bottom: 1px solid rgba(13,148,136,0.2);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      overflow: hidden;
+    }
+
+    .announcement-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      background: var(--teal);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      white-space: nowrap;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .announcement-text {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .announcement-text strong { color: var(--cream); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--amber);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ─── INSTALL BANNER ─── */
+    #install-banner {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      max-width: 420px;
+      width: calc(100% - 2rem);
+      backdrop-filter: blur(20px);
+    }
+
+    #install-banner.visible { display: flex; }
+
+    .install-text { font-size: 0.85rem; color: var(--cream); flex: 1; }
+    .install-text strong { color: var(--amber); display: block; margin-bottom: 0.2rem; }
+
+    #install-btn {
+      background: var(--amber);
+      color: var(--navy);
+      border: none;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    #install-btn:hover { background: var(--amber-light); }
+
+    #dismiss-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.2rem;
+      line-height: 1;
+    }
+    #dismiss-btn:hover { color: var(--cream); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+
+      .hero { padding: 5rem 1.25rem 3rem; }
+      .hero-stats { gap: 1.5rem; }
+
+      .hero-eyebrow::before { display: none; }
+      .hero-eyebrow { font-size: 0.65rem; letter-spacing: 2px; }
+
+      section { padding: 3.5rem 1.25rem; }
+
+      .courses-grid { grid-template-columns: 1fr 1fr; }
+      .features-row { grid-template-columns: 1fr; }
+
+      .footer { flex-direction: column; align-items: flex-start; }
+
+      .announcement { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.85rem 1.25rem; }
+      .announcement-text { font-size: 0.8rem; }
+    }
+
+    @media (max-width: 480px) {
+      .courses-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-ghost { justify-content: center; }
+      .hero-title { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: -0.5px; }
+      .hero-stats { flex-wrap: wrap; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+    .hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
+    <ul class="nav-links">
+      <li><a href="HomePage.html" class="active">Home</a></li>
+      <li><a href="Courses.html">Courses</a></li>
+      <li><a href="Notes.html">Notes</a></li>
+      <li><a href="PDFs.html">PDFs</a></li>
+      <li><a href="Calendar.html">Calendar</a></li>
+      <li><a href="login.html" class="nav-cta">Login</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="HomePage.html">Home</a>
+    <a href="Courses.html">Courses</a>
+    <a href="Notes.html">Notes</a>
+    <a href="PDFs.html">PDFs</a>
+    <a href="Calendar.html">Calendar</a>
+    <a href="login.html">Login</a>
+  </div>
+
+  <!-- ANNOUNCEMENT STRIP -->
+  <div class="announcement">
+    <span class="announcement-tag">Notice</span>
+    <p class="announcement-text"><strong>Week 8 coursework</strong> submission deadline approaching — check the Calendar for details.</p>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">UICT · Professional Certificate in Software Engineering</p>
+    <h1 class="hero-title">
+      <span class="line1">ENGINEERING</span>
+      <span class="line2">LAB</span>
+      <span class="line3">112</span>
+    </h1>
+    <p class="hero-sub">Your student portal for course materials, notes, PDF resources, and coursework deadlines — all in one place.</p>
+    <div class="hero-actions">
+      <a href="Courses.html" class="btn-primary">
+        <i class="bi bi-grid-3x3-gap-fill"></i> View Courses
+      </a>
+      <a href="Calendar.html" class="btn-ghost">
+        <i class="bi bi-calendar3"></i> Coursework Deadlines
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">05</span>
+        <span class="stat-label">Courses</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">112</span>
+        <span class="stat-label">The Lab</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">PCSE</span>
+        <span class="stat-label">Programme</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES SECTION -->
+  <section>
+    <p class="section-label">Programme</p>
+    <h2 class="section-title">Your <span>5 Courses</span></h2>
+    <p class="section-desc">Access outlines, notes, and PDFs for every course in the PCSE programme.</p>
+    <div class="courses-grid">
+      <a href="Courses.html#c-programming" class="course-card">
+        <div class="course-icon"><i class="bi bi-braces"></i></div>
+        <div class="course-name">C# Programming</div>
+        <div class="course-desc">Fundamentals of C# syntax, object-oriented programming, and .NET application development.</div>
+        <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
+      </a>
+      <a href="Courses.html#web-design" class="course-card">
+        <div class="course-icon"><i class="bi bi-code-slash"></i></div>
+        <div class="course-name">JAVA Programming</div>
+        <div class="course-desc">Master Java syntax, JVM architecture, and building robust, scalable software solutions.</div>
+        <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
+      </a>
+      <a href="Courses.html#database" class="course-card">
+        <div class="course-icon"><i class="bi bi-database"></i></div>
+        <div class="course-name">Entreprenuership Skills</div>
+        <div class="course-desc">Business planning, market analysis, and the core principles of launching and managing a startup.</div>
+        <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
+      </a>
+      <a href="Courses.html#networking" class="course-card">
+        <div class="course-icon"><i class="bi bi-diagram-3"></i></div>
+        <div class="course-name">Computer Hardware</div>
+        <div class="course-desc">Exploration of physical components, assembly, maintenance, and low-level system architecture.</div>
+        <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
+      </a>
+      <a href="Courses.html#systems" class="course-card">
+        <div class="course-icon"><i class="bi bi-cpu"></i></div>
+        <div class="course-name">Real-life Project II</div>
+        <div class="course-desc">Practical application of the software development lifecycle through end-to-end project builds.</div>
+        <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section>
+    <p class="section-label">Portal Features</p>
+    <h2 class="section-title">Everything you <span>need</span></h2>
+    <p class="section-desc">Built specifically for UICT PCSE students to stay organised and on top of their work.</p>
+    <div class="features-row">
+      <a href="PDFs.html" class="feature-card">
+        <div class="feature-icon-wrap teal"><i class="bi bi-file-earmark-pdf"></i></div>
+        <div>
+          <div class="feature-title">PDF Library</div>
+          <div class="feature-desc">All your lecture PDFs organised by subject. No more hunting through your downloads folder.</div>
+        </div>
+        <div class="feature-link">Browse PDFs <i class="bi bi-arrow-right"></i></div>
+      </a>
+      <a href="Notes.html" class="feature-card">
+        <div class="feature-icon-wrap amber"><i class="bi bi-journal-text"></i></div>
+        <div>
+          <div class="feature-title">Course Notes</div>
+          <div class="feature-desc">Key concepts from lectures written out and formatted for easy reading and revision.</div>
+        </div>
+        <div class="feature-link">Read Notes <i class="bi bi-arrow-right"></i></div>
+      </a>
+      <a href="Calendar.html" class="feature-card">
+        <div class="feature-icon-wrap rose"><i class="bi bi-calendar-check"></i></div>
+        <div>
+          <div class="feature-title">Deadline Calendar</div>
+          <div class="feature-desc">Coursework deadlines, test dates, and important academic events all in one calendar.</div>
+        </div>
+        <div class="feature-link">View Calendar <i class="bi bi-arrow-right"></i></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">LAB112</div>
+    <div class="footer-copy">Uganda Institute of Information Communication and Technology · PCSE · 2025</div>
+  </footer>
+
+  <!-- PWA INSTALL BANNER -->
+  <div id="install-banner">
+    <div class="install-text">
+      <strong>Install LAB 112</strong>
+      Add this portal to your home screen for offline access.
+    </div>
+    <button id="install-btn">Install</button>
+    <button id="dismiss-btn" aria-label="Dismiss">✕</button>
+  </div>
+
+  <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      }
+    });
+
+    // PWA Install prompt
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+    const dismissBtn = document.getElementById('dismiss-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBanner.classList.add('visible');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installBanner.classList.remove('visible');
+      }
+    });
+
+    dismissBtn.addEventListener('click', () => {
+      installBanner.classList.remove('visible');
+    });
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

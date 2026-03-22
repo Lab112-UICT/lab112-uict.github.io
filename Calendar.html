@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Calendar — LAB 112</title>
+  <style>
+    :root{--navy:#0a1628;--amber:#f0a500;--amber-light:#ffc94a;--cream:#f5ede0;--teal:#0d9488;--teal-light:#14b8a6;--text-dim:#8899aa;--card-bg:rgba(17,34,64,0.7);--border:rgba(240,165,0,0.2);--font-display:'Syne',sans-serif;--font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{background-color:var(--navy);color:var(--cream);font-family:var(--font-body);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(13,148,136,0.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(240,165,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(240,165,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(240,165,0,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(10,22,40,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--amber);letter-spacing:2px;text-decoration:none;}
+    .nav-logo span{color:var(--cream);font-weight:400;}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:0.85rem;font-weight:500;color:var(--text-dim);letter-spacing:0.5px;transition:color 0.2s;text-transform:uppercase;}
+    .nav-links a:hover,.nav-links a.active{color:var(--amber);}
+    .nav-cta{background:var(--amber);color:var(--navy)!important;padding:0.4rem 1rem;border-radius:4px;font-weight:700!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--cream);transition:all 0.3s;border-radius:2px;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    .mobile-nav{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:99;padding:1.5rem 2rem;flex-direction:column;transform:translateY(-110%);transition:transform 0.3s ease;}
+    .mobile-nav.open{transform:translateY(0);}
+    .mobile-nav a{display:block;padding:1rem 0;text-decoration:none;font-size:1rem;color:var(--text-dim);border-bottom:1px solid var(--border);}
+    .mobile-nav a:last-child{border-bottom:none;}
+    .mobile-nav a:hover{color:var(--amber);}
+    .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:6rem 2rem 4rem;display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start;}
+
+    .page-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--teal-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .page-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal-light);}
+    .page-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
+    .page-title span{color:var(--amber);}
+    .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:2.5rem;}
+
+    /* CALENDAR */
+    .calendar-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;backdrop-filter:blur(8px);}
+    .cal-nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);}
+    .cal-month{font-family:var(--font-display);font-weight:700;font-size:1rem;}
+    .cal-nav-btn{background:none;border:1px solid var(--border);color:var(--cream);border-radius:5px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:0.9rem;}
+    .cal-nav-btn:hover{border-color:var(--amber);color:var(--amber);}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);}
+    .cal-day-header{background:var(--navy);padding:0.5rem 0;text-align:center;font-family:var(--font-mono);font-size:0.62rem;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;}
+    .cal-day{background:var(--navy);padding:0.5rem;min-height:52px;position:relative;cursor:pointer;transition:background 0.15s;}
+    .cal-day:hover{background:rgba(240,165,0,0.05);}
+    .cal-day.empty{background:rgba(10,22,40,0.5);cursor:default;}
+    .cal-day.today .day-num{background:var(--amber);color:var(--navy);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:700;}
+    .cal-day.has-event::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal-light);}
+    .day-num{font-family:var(--font-mono);font-size:0.72rem;color:var(--text-dim);margin-bottom:0.2rem;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+    .day-dot{width:5px;height:5px;border-radius:50%;margin:1px auto;}
+    .dot-amber{background:var(--amber);}
+    .dot-teal{background:var(--teal-light);}
+    .dot-rose{background:#fb7185;}
+
+    /* DEADLINES LIST */
+    .deadlines{display:flex;flex-direction:column;gap:0;}
+    .deadline-group-title{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;padding:1rem 0 0.5rem;margin-bottom:0;}
+    .deadline-item{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin-bottom:0.75rem;display:flex;align-items:flex-start;gap:1rem;backdrop-filter:blur(8px);transition:all 0.2s;}
+    .deadline-item:hover{border-color:rgba(240,165,0,0.3);}
+    .deadline-item.urgent{border-left:3px solid #fb7185;}
+    .deadline-item.upcoming{border-left:3px solid var(--amber);}
+    .deadline-item.later{border-left:3px solid var(--teal-light);}
+    .deadline-item.done{border-left:3px solid #4b5563;opacity:0.6;}
+    .deadline-date{text-align:center;min-width:44px;}
+    .date-day{font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:var(--amber);line-height:1;}
+    .date-month{font-family:var(--font-mono);font-size:0.6rem;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;}
+    .deadline-content{flex:1;}
+    .deadline-title{font-family:var(--font-display);font-size:0.92rem;font-weight:700;color:var(--cream);margin-bottom:0.2rem;}
+    .deadline-course{font-size:0.75rem;color:var(--text-dim);}
+    .deadline-badge{font-family:var(--font-mono);font-size:0.6rem;padding:0.15rem 0.5rem;border-radius:3px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;}
+    .badge-urgent{background:rgba(251,113,133,0.12);color:#fb7185;border:1px solid rgba(251,113,133,0.25);}
+    .badge-upcoming{background:rgba(240,165,0,0.1);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
+    .badge-later{background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.2);}
+    .badge-done{background:rgba(75,85,99,0.2);color:#6b7280;border:1px solid rgba(75,85,99,0.3);}
+
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:84px;}
+    .legend-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem;backdrop-filter:blur(8px);margin-bottom:1.25rem;}
+    .legend-title{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+    .legend-item{display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--text-dim);margin-bottom:0.5rem;}
+    .legend-bar{width:10px;height:10px;border-radius:2px;}
+    .bar-urgent{background:#fb7185;}
+    .bar-upcoming{background:var(--amber);}
+    .bar-later{background:var(--teal-light);}
+    .bar-done{background:#4b5563;}
+
+    .summary-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem;backdrop-filter:blur(8px);}
+    .summary-title{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+    .summary-stat{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid var(--border);font-size:0.82rem;}
+    .summary-stat:last-child{border-bottom:none;}
+    .summary-num{font-family:var(--font-mono);font-weight:700;color:var(--amber);}
+
+    footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.78rem;color:var(--text-dim);}
+    @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.sidebar{position:static;}}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
+    <ul class="nav-links">
+      <li><a href="HomePage.html">Home</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Notes.html">Notes</a></li><li><a href="PDFs.html">PDFs</a></li><li><a href="Calendar.html" class="active">Calendar</a></li><li><a href="login.html" class="nav-cta">Login</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="HomePage.html">Home</a><a href="Courses.html">Courses</a><a href="Notes.html">Notes</a><a href="PDFs.html">PDFs</a><a href="Calendar.html">Calendar</a><a href="login.html">Login</a>
+  </div>
+
+  <div class="page-wrap">
+    <div class="main-col">
+      <p class="page-eyebrow">Deadlines</p>
+      <h1 class="page-title">Coursework <span>Calendar</span></h1>
+      <p class="page-sub">Track all submission deadlines and test dates in one place.</p>
+
+      <!-- MINI CALENDAR -->
+      <div class="calendar-card" style="margin-bottom:2rem;">
+        <div class="cal-nav">
+          <button class="cal-nav-btn" id="prev-month"><i class="bi bi-chevron-left"></i></button>
+          <div class="cal-month" id="cal-month-label"></div>
+          <button class="cal-nav-btn" id="next-month"><i class="bi bi-chevron-right"></i></button>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-day-header">Su</div>
+          <div class="cal-day-header">Mo</div>
+          <div class="cal-day-header">Tu</div>
+          <div class="cal-day-header">We</div>
+          <div class="cal-day-header">Th</div>
+          <div class="cal-day-header">Fr</div>
+          <div class="cal-day-header">Sa</div>
+        </div>
+        <div class="cal-grid" id="cal-body"></div>
+      </div>
+
+      <!-- DEADLINES LIST -->
+      <div class="deadlines" id="deadlines-list"></div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="legend-card">
+        <div class="legend-title">Legend</div>
+        <div class="legend-item"><div class="legend-bar bar-urgent"></div> Due within 3 days</div>
+        <div class="legend-item"><div class="legend-bar bar-upcoming"></div> Due this week</div>
+        <div class="legend-item"><div class="legend-bar bar-later"></div> Upcoming</div>
+        <div class="legend-item"><div class="legend-bar bar-done"></div> Submitted</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-title">Summary</div>
+        <div class="summary-stat"><span>Total Deadlines</span><span class="summary-num" id="total-count">0</span></div>
+        <div class="summary-stat"><span>Urgent</span><span class="summary-num" id="urgent-count">0</span></div>
+        <div class="summary-stat"><span>Upcoming</span><span class="summary-num" id="upcoming-count">0</span></div>
+        <div class="summary-stat"><span>Submitted</span><span class="summary-num" id="done-count">0</span></div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>Uganda Institute of Information Communication and Technology · LAB 112 · PCSE 2025</footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); }});
+
+    // ── DEADLINES DATA  ──
+    const deadlines = [
+      { day: 23, month: 3, year: 2026, title: 'JAVA Programming Assignment 1', course: 'JAVA Programming', status: 'urgent' },
+      { day: 26, month: 3, year: 2026, title: 'Business Plan Work', course: 'Entrepreneurship', status: 'upcoming' },
+      { day: 9,  month: 4, year: 2026, title: 'Entrepreneurship Course work', course: 'Entrepreneurship Skills', status: 'later'},
+    ];
+
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const SHORT_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    let currentDate = new Date();
+    let viewYear = currentDate.getFullYear();
+    let viewMonth = currentDate.getMonth();
+
+    function renderCalendar() {
+      document.getElementById('cal-month-label').textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+      const body = document.getElementById('cal-body');
+      body.innerHTML = '';
+
+      const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+      const today = currentDate;
+
+      const eventDays = new Set(deadlines
+        .filter(d => d.month - 1 === viewMonth && d.year === viewYear && d.status !== 'done')
+        .map(d => d.day));
+
+      for (let i = 0; i < firstDay; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        body.appendChild(el);
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day';
+        const isToday = d === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+        if (isToday) el.classList.add('today');
+        if (eventDays.has(d)) el.classList.add('has-event');
+
+        const numEl = document.createElement('div');
+        numEl.className = 'day-num';
+        numEl.textContent = d;
+        el.appendChild(numEl);
+        body.appendChild(el);
+      }
+    }
+
+    function renderDeadlines() {
+      const list = document.getElementById('deadlines-list');
+      const sorted = [...deadlines].sort((a, b) => new Date(a.year, a.month-1, a.day) - new Date(b.year, b.month-1, b.day));
+
+      const groups = { urgent: [], upcoming: [], later: [], done: [] };
+      sorted.forEach(d => groups[d.status].push(d));
+
+      const groupLabels = { urgent: '🔴 Due Soon', upcoming: '🟡 This Week', later: '🟢 Upcoming', done: '✅ Submitted' };
+
+      list.innerHTML = '';
+      Object.entries(groups).forEach(([status, items]) => {
+        if (!items.length) return;
+        const title = document.createElement('div');
+        title.className = 'deadline-group-title';
+        title.textContent = groupLabels[status];
+        list.appendChild(title);
+
+        items.forEach(item => {
+          const el = document.createElement('div');
+          el.className = `deadline-item ${status}`;
+          el.innerHTML = `
+            <div class="deadline-date">
+              <div class="date-day">${String(item.day).padStart(2,'0')}</div>
+              <div class="date-month">${SHORT_MONTHS[item.month - 1]}</div>
+            </div>
+            <div class="deadline-content">
+              <div class="deadline-title">${item.title}</div>
+              <div class="deadline-course">${item.course}</div>
+            </div>
+            <span class="deadline-badge badge-${status}">${status === 'urgent' ? 'Urgent' : status === 'upcoming' ? 'Soon' : status === 'done' ? 'Done' : 'Upcoming'}</span>
+          `;
+          list.appendChild(el);
+        });
+      });
+
+      document.getElementById('total-count').textContent = deadlines.length;
+      document.getElementById('urgent-count').textContent = groups.urgent.length;
+      document.getElementById('upcoming-count').textContent = groups.upcoming.length + groups.later.length;
+      document.getElementById('done-count').textContent = groups.done.length;
+    }
+
+    document.getElementById('prev-month').addEventListener('click', () => {
+      viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } renderCalendar();
+    });
+    document.getElementById('next-month').addEventListener('click', () => {
+      viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } renderCalendar();
+    });
+
+    renderCalendar();
+    renderDeadlines();
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  </script>
+</body>
+</html>

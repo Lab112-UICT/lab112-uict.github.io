@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Notes — LAB 112</title>
+  <style>
+    :root{--navy:#0a1628;--navy-mid:#112240;--amber:#f0a500;--amber-light:#ffc94a;--cream:#f5ede0;--teal:#0d9488;--teal-light:#14b8a6;--text-dim:#8899aa;--card-bg:rgba(17,34,64,0.7);--border:rgba(240,165,0,0.2);--font-display:'Syne',sans-serif;--font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;}
+    *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+    body{background-color:var(--navy);color:var(--cream);font-family:var(--font-body);overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(13,148,136,0.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(240,165,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(240,165,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(240,165,0,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:rgba(10,22,40,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--font-mono);font-size:1.1rem;font-weight:700;color:var(--amber);letter-spacing:2px;text-decoration:none;}
+    .nav-logo span{color:var(--cream);font-weight:400;}
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:0.85rem;font-weight:500;color:var(--text-dim);letter-spacing:0.5px;transition:color 0.2s;text-transform:uppercase;}
+    .nav-links a:hover,.nav-links a.active{color:var(--amber);}
+    .nav-cta{background:var(--amber);color:var(--navy)!important;padding:0.4rem 1rem;border-radius:4px;font-weight:700!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--cream);transition:all 0.3s;border-radius:2px;}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+    .mobile-nav{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,22,40,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:99;padding:1.5rem 2rem;flex-direction:column;transform:translateY(-110%);transition:transform 0.3s ease;}
+    .mobile-nav.open{transform:translateY(0);}
+    .mobile-nav a{display:block;padding:1rem 0;text-decoration:none;font-size:1rem;color:var(--text-dim);border-bottom:1px solid var(--border);}
+    .mobile-nav a:last-child{border-bottom:none;}
+    .mobile-nav a:hover{color:var(--amber);}
+
+    /* LAYOUT */
+    .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:6rem 2rem 4rem;display:grid;grid-template-columns:220px 1fr;gap:2.5rem;align-items:start;}
+
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:84px;}
+    .sidebar-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
+    .sidebar-nav{list-style:none;display:flex;flex-direction:column;gap:0.25rem;}
+    .sidebar-nav a{display:flex;align-items:center;gap:0.6rem;text-decoration:none;font-size:0.82rem;color:var(--text-dim);padding:0.5rem 0.75rem;border-radius:5px;transition:all 0.2s;border-left:2px solid transparent;}
+    .sidebar-nav a:hover{color:var(--amber);background:rgba(240,165,0,0.06);border-left-color:var(--amber);}
+    .sidebar-nav a.active{color:var(--amber);background:rgba(240,165,0,0.08);border-left-color:var(--amber);}
+
+    /* CONTENT */
+    .content{position:relative;z-index:1;}
+    .page-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--teal-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .page-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal-light);}
+    .page-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
+    .page-title span{color:var(--amber);}
+    .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:3rem;}
+
+    /* SEARCH */
+    .search-wrap{position:relative;margin-bottom:2.5rem;}
+    .search-wrap i{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--text-dim);}
+    #search{width:100%;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:0.75rem 1rem 0.75rem 2.75rem;color:var(--cream);font-family:var(--font-body);font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+    #search::placeholder{color:var(--text-dim);}
+    #search:focus{border-color:rgba(240,165,0,0.5);}
+
+    /* NOTE SECTION */
+    .note-section{margin-bottom:3rem;scroll-margin-top:84px;}
+    .note-section-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
+    .note-section-icon{width:38px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);color:var(--amber);}
+    .note-section-title{font-family:var(--font-display);font-size:1.3rem;font-weight:700;}
+    .note-section-num{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;}
+
+    /* NOTE CARD */
+    .note-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1rem;backdrop-filter:blur(8px);}
+    .note-card-title{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
+    .note-card-title::before{content:'';display:inline-block;width:6px;height:6px;background:var(--amber);border-radius:50%;}
+    .note-body{font-size:0.875rem;color:var(--text-dim);line-height:1.8;}
+    .note-body p{margin-bottom:0.75rem;}
+    .note-body p:last-child{margin-bottom:0;}
+    .note-body strong{color:var(--cream);}
+    .note-body code{font-family:var(--font-mono);background:rgba(240,165,0,0.1);color:var(--amber-light);padding:0.15rem 0.4rem;border-radius:3px;font-size:0.8rem;}
+    .note-tag{display:inline-block;font-family:var(--font-mono);font-size:0.62rem;padding:0.15rem 0.5rem;border-radius:3px;margin-right:0.4rem;letter-spacing:1px;text-transform:uppercase;}
+    .note-tag-amber{background:rgba(240,165,0,0.12);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
+    .note-tag-teal{background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.2);}
+
+    footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.78rem;color:var(--text-dim);}
+
+    @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.sidebar{position:static;display:none;}}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
+    <ul class="nav-links">
+      <li><a href="HomePage.html">Home</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Notes.html" class="active">Notes</a></li><li><a href="PDFs.html">PDFs</a></li><li><a href="Calendar.html">Calendar</a></li><li><a href="login.html" class="nav-cta">Login</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="HomePage.html">Home</a><a href="Courses.html">Courses</a><a href="Notes.html">Notes</a><a href="PDFs.html">PDFs</a><a href="Calendar.html">Calendar</a><a href="login.html">Login</a>
+  </div>
+
+  <div class="page-wrap">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Jump to</div>
+      <ul class="sidebar-nav">
+        <li><a href="#c-programming"><i class="bi bi-braces"></i> C# Programming</a></li>
+        <li><a href="#web-design"><i class="bi bi-code-slash"></i> JAVA Programming</a></li>
+        <li><a href="#database"><i class="bi bi-database"></i> Entrepreneurship Skills</a></li>
+        <li><a href="#networking"><i class="bi bi-diagram-3"></i> Computer Hardware</a></li>
+        <li><a href="#systems"><i class="bi bi-cpu"></i> Real-life Project II</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <p class="page-eyebrow">Study Material</p>
+      <h1 class="page-title">Course <span>Notes</span></h1>
+      <p class="page-sub">Key concepts and summaries from lectures. Use the search below to find any topic quickly.</p>
+
+      <div class="search-wrap">
+        <i class="bi bi-search"></i>
+        <input type="text" id="search" placeholder="Search notes — e.g. 'pointers', 'SQL joins', 'OSI model'..." />
+      </div>
+
+      <!-- C# PROGRAMMING NOTES -->
+      <div class="note-section" id="c-programming">
+        <div class="note-section-header">
+          <div class="note-section-icon"><i class="bi bi-braces"></i></div>
+          <div><div class="note-section-num">COURSE 01</div><div class="note-section-title">C# Programming</div></div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Structure of a C# Program</div>
+          <div class="note-body">
+            <p>Every C program has a defined structure. The entry point is the <code>main()</code> function. Preprocessor directives like <code>#include &lt;stdio.h&gt;</code> are placed at the top to include standard libraries.</p>
+            <p><strong>Basic structure:</strong> Preprocessor directives → Global declarations → <code>main()</code> function → User-defined functions.</p>
+            <p>The <code>printf()</code> function outputs to the screen. <code>scanf()</code> reads user input. Both require the <code>stdio.h</code> header.</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Data Types & Variables</div>
+          <div class="note-body">
+            <p><strong>int</strong> — whole numbers. <strong>float</strong> — decimal numbers (6–7 digits precision). <strong>double</strong> — more precise decimals (15 digits). <strong>char</strong> — a single character. <strong>void</strong> — no value.</p>
+            <p>Variable declaration syntax: <code>datatype variableName = value;</code>. Constants use <code>const</code> keyword or <code>#define</code> directive. Variable names are case-sensitive and cannot start with a number.</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Pointers</div>
+          <div class="note-body">
+            <p>A pointer is a variable that stores the <strong>memory address</strong> of another variable. Declared using <code>*</code>: e.g. <code>int *p;</code>. The <code>&amp;</code> operator gets the address of a variable.</p>
+            <p><strong>Key rule:</strong> <code>*p</code> gives the value at the address stored in p (dereferencing). <code>&amp;x</code> gives the address of variable x. Pointers enable dynamic memory allocation using <code>malloc()</code> and <code>free()</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEB DESIGN NOTES -->
+      <div class="note-section" id="web-design">
+        <div class="note-section-header">
+          <div class="note-section-icon"><i class="bi bi-code-slash"></i></div>
+          <div><div class="note-section-num">COURSE 02</div><div class="note-section-title">Web Designing</div></div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">The Box Model</div>
+          <div class="note-body">
+            <p>Every HTML element is a rectangular box. The CSS Box Model defines how space is calculated: <strong>Content → Padding → Border → Margin</strong>.</p>
+            <p>Use <code>box-sizing: border-box</code> so padding and border are included in the element's total width/height. This is the most predictable behaviour and is standard practice.</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Flexbox Essentials</div>
+          <div class="note-body">
+            <p>Flexbox is a one-dimensional layout system. Set <code>display: flex</code> on the parent. Key properties: <code>justify-content</code> (main axis alignment), <code>align-items</code> (cross axis alignment), <code>gap</code> (space between items).</p>
+            <p><strong>Common values:</strong> <code>flex-direction: row | column</code>, <code>flex-wrap: wrap</code>, <code>justify-content: center | space-between | space-around</code>.</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Responsive Design</div>
+          <div class="note-body">
+            <p>Responsive design ensures a website works well on all screen sizes. Key techniques: media queries (<code>@media (max-width: 768px)</code>), fluid widths using percentages or <code>vw</code>/<code>vh</code>, and flexible images with <code>max-width: 100%</code>.</p>
+            <p><strong>Mobile-first approach:</strong> Write default CSS for small screens, then add media queries for larger screens using <code>min-width</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATABASE NOTES -->
+      <div class="note-section" id="database">
+        <div class="note-section-header">
+          <div class="note-section-icon"><i class="bi bi-database"></i></div>
+          <div><div class="note-section-num">COURSE 03</div><div class="note-section-title">Database Programming</div></div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">SQL Basics</div>
+          <div class="note-body">
+            <p>SQL (Structured Query Language) is used to communicate with relational databases. It is divided into: <strong>DDL</strong> (Data Definition Language) — CREATE, ALTER, DROP; <strong>DML</strong> (Data Manipulation Language) — SELECT, INSERT, UPDATE, DELETE.</p>
+            <p>Basic query: <code>SELECT column FROM table WHERE condition;</code>. Always end SQL statements with a semicolon.</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Joins</div>
+          <div class="note-body">
+            <p>Joins combine rows from two or more tables based on a related column. <strong>INNER JOIN</strong> returns rows where there is a match in both tables. <strong>LEFT JOIN</strong> returns all rows from the left table plus matched rows from the right. <strong>RIGHT JOIN</strong> is the reverse.</p>
+            <p>Syntax: <code>SELECT a.col, b.col FROM tableA a INNER JOIN tableB b ON a.id = b.id;</code></p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Normalisation</div>
+          <div class="note-body">
+            <p>Normalisation is the process of organising a database to reduce data redundancy and improve integrity.</p>
+            <p><strong>1NF:</strong> Each column contains atomic (indivisible) values; no repeating groups. <strong>2NF:</strong> In 1NF + all non-key columns fully depend on the primary key. <strong>3NF:</strong> In 2NF + no transitive dependencies (non-key column depending on another non-key column).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NETWORKING NOTES -->
+      <div class="note-section" id="networking">
+        <div class="note-section-header">
+          <div class="note-section-icon"><i class="bi bi-diagram-3"></i></div>
+          <div><div class="note-section-num">COURSE 04</div><div class="note-section-title">Networking</div></div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">The OSI Model</div>
+          <div class="note-body">
+            <p>The OSI (Open Systems Interconnection) model has 7 layers — a framework for understanding how data travels across a network.</p>
+            <p><strong>Layer 7 — Application:</strong> HTTP, FTP (what users interact with). <strong>Layer 4 — Transport:</strong> TCP/UDP, end-to-end delivery. <strong>Layer 3 — Network:</strong> IP addressing and routing. <strong>Layer 2 — Data Link:</strong> MAC addresses. <strong>Layer 1 — Physical:</strong> cables and signals.</p>
+            <p>Memory aid: <em>"All People Seem To Need Data Processing"</em> (Application → Physical).</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">IP Addressing</div>
+          <div class="note-body">
+            <p>An IP address uniquely identifies a device on a network. IPv4 uses 32 bits written as four octets: e.g. <code>192.168.1.1</code>. Each octet ranges from 0–255.</p>
+            <p><strong>Classes:</strong> Class A (1–126), Class B (128–191), Class C (192–223). Private IP ranges (not routable on the internet): <code>10.x.x.x</code>, <code>172.16–31.x.x</code>, <code>192.168.x.x</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SYSTEMS ANALYSIS NOTES -->
+      <div class="note-section" id="systems">
+        <div class="note-section-header">
+          <div class="note-section-icon"><i class="bi bi-cpu"></i></div>
+          <div><div class="note-section-num">COURSE 05</div><div class="note-section-title">Systems Analysis</div></div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">The SDLC</div>
+          <div class="note-body">
+            <p>The Software Development Life Cycle (SDLC) is a structured process for building software. Phases: <strong>Planning → Analysis → Design → Implementation → Testing → Deployment → Maintenance</strong>.</p>
+            <p>Common models include <strong>Waterfall</strong> (sequential, each phase completes before the next), <strong>Agile</strong> (iterative, work in short sprints), and <strong>Spiral</strong> (risk-driven, iterative).</p>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-card-title">Data Flow Diagrams (DFD)</div>
+          <div class="note-body">
+            <p>A DFD shows how data moves through a system. Key symbols: <strong>Process</strong> (circle/rectangle — transforms data), <strong>Data Store</strong> (open-ended rectangle — stores data), <strong>External Entity</strong> (square — outside the system), <strong>Data Flow</strong> (arrow — shows direction of data).</p>
+            <p><strong>Level 0 (Context Diagram):</strong> Shows the entire system as one process. <strong>Level 1:</strong> Breaks down the main process into sub-processes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Uganda Institute of Information Communication and Technology · LAB 112 · PCSE 2025</footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
+    document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); }});
+
+    // Search
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      document.querySelectorAll('.note-card').forEach(card => {
+        card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+      document.querySelectorAll('.note-section').forEach(section => {
+        const visible = [...section.querySelectorAll('.note-card')].some(c => c.style.display !== 'none');
+        section.style.display = visible ? '' : 'none';
+      });
+    });
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  </script>
+</body>
+</html>
