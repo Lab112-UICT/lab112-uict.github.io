@@ -35,20 +35,14 @@
     .page-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
     .page-title span{color:var(--amber);}
     .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;}
-
-    /* FILTER TABS */
     .filter-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;}
     .tab{background:var(--card-bg);border:1px solid var(--border);border-radius:5px;padding:0.4rem 1rem;font-size:0.8rem;font-family:var(--font-display);font-weight:600;color:var(--text-dim);cursor:pointer;transition:all 0.2s;}
     .tab.active,.tab:hover{background:rgba(240,165,0,0.12);border-color:rgba(240,165,0,0.4);color:var(--amber);}
-
-    /* PDF GROUP */
     .pdf-group{margin-bottom:2.5rem;scroll-margin-top:84px;}
     .pdf-group-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);}
     .pdf-group-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);color:var(--amber);}
     .pdf-group-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;}
     .pdf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.85rem;}
-
-    /* PDF CARD */
     .pdf-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem;display:flex;flex-direction:column;gap:0.75rem;backdrop-filter:blur(8px);transition:all 0.2s;}
     .pdf-card:hover{border-color:rgba(240,165,0,0.4);transform:translateY(-2px);}
     .pdf-card-top{display:flex;align-items:flex-start;gap:0.75rem;}
@@ -63,21 +57,22 @@
     .pdf-btn-view:hover{background:rgba(240,165,0,0.22);}
     .pdf-btn-dl{background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.2);}
     .pdf-btn-dl:hover{background:rgba(13,148,136,0.2);}
-
-    /* UPLOAD HINT */
-    .upload-hint{background:rgba(13,148,136,0.06);border:1px dashed rgba(13,148,136,0.3);border-radius:8px;padding:1.5rem;text-align:center;color:var(--text-dim);font-size:0.85rem;margin-top:1rem;}
-    .upload-hint i{font-size:1.5rem;color:var(--teal-light);margin-bottom:0.5rem;display:block;}
-    .upload-hint strong{color:var(--cream);}
-
+    .coming-soon{background:rgba(240,165,0,0.04);border:1px dashed rgba(240,165,0,0.2);border-radius:8px;padding:1.5rem;text-align:center;color:var(--text-dim);font-size:0.85rem;}
+    .coming-soon i{font-size:1.5rem;color:var(--text-dim);margin-bottom:0.5rem;display:block;}
     footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.78rem;color:var(--text-dim);}
-    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}.pdf-grid{grid-template-columns:1fr;}}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}.pdf-grid{grid-template-columns:1fr;}.filter-tabs{gap:0.4rem;}.tab{font-size:0.72rem;padding:0.35rem 0.75rem;}}
   </style>
 </head>
 <body>
   <nav class="navbar">
     <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
     <ul class="nav-links">
-      <li><a href="HomePage.html">Home</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Notes.html">Notes</a></li><li><a href="PDFs.html" class="active">PDFs</a></li><li><a href="Calendar.html">Calendar</a></li><li><a href="login.html" class="nav-cta">Login</a></li>
+      <li><a href="HomePage.html">Home</a></li>
+      <li><a href="Courses.html">Courses</a></li>
+      <li><a href="Notes.html">Notes</a></li>
+      <li><a href="PDFs.html" class="active">PDFs</a></li>
+      <li><a href="Calendar.html">Calendar</a></li>
+      <li><a href="login.html" class="nav-cta">Login</a></li>
     </ul>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </nav>
@@ -92,17 +87,17 @@
 
     <div class="filter-tabs">
       <div class="tab active" onclick="filterPDFs('all', this)">All PDFs</div>
-      <div class="tab" onclick="filterPDFs('c-programming', this)">C# Programming</div>
-      <div class="tab" onclick="filterPDFs('web-design', this)">JAVA Programming</div>
-      <div class="tab" onclick="filterPDFs('database', this)">Entrepreneurship Skills</div>
-      <div class="tab" onclick="filterPDFs('networking', this)">Computer Hardware</div>
-      <div class="tab" onclick="filterPDFs('systems', this)">Real-life Project II</div>
+      <div class="tab" onclick="filterPDFs('c-sharp', this)">C# Programming</div>
+      <div class="tab" onclick="filterPDFs('entrepreneurship', this)">Entrepreneurship</div>
+      <div class="tab" onclick="filterPDFs('java', this)">Java Programming</div>
+      <div class="tab" onclick="filterPDFs('real-life-project', this)">Real-life Project</div>
+      <div class="tab" onclick="filterPDFs('computer-hardware', this)">Computer Hardware</div>
     </div>
 
-    <!-- C# PROGRAMMING PDFs -->
-    <div class="pdf-group" id="c-programming" data-course="c-programming">
+    <!-- C# PROGRAMMING -->
+    <div class="pdf-group" id="c-sharp" data-course="c-sharp">
       <div class="pdf-group-header">
-        <div class="pdf-group-icon"><i class="bi bi-braces"></i></div>
+        <div class="pdf-group-icon"><i class="bi bi-braces-asterisk"></i></div>
         <div class="pdf-group-title">C# Programming</div>
       </div>
       <div class="pdf-grid">
@@ -110,89 +105,37 @@
           <div class="pdf-card-top">
             <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
             <div class="pdf-info">
-              <div class="pdf-name">C# Programming — Introduction &amp; Basics</div>
-              <div class="pdf-meta">Week 1 · Lecture Notes</div>
+              <div class="pdf-name">C-sharp Course Work 1</div>
+              <div class="pdf-meta">C# Programming · Course Work</div>
             </div>
           </div>
-          <span class="pdf-tag">C Programming</span>
+          <span class="pdf-tag">C# Programming</span>
           <div class="pdf-actions">
-            <a href="pdfs/c-programming/c-intro.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/c-programming/c-intro.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+            <a href="PDFs/c-sharp/C-sharp course work1.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/c-sharp/C-sharp course work1.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
           </div>
         </div>
         <div class="pdf-card">
           <div class="pdf-card-top">
             <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
             <div class="pdf-info">
-              <div class="pdf-name">Pointers &amp; Memory Management</div>
-              <div class="pdf-meta">Week 4 · Lecture Notes</div>
+              <div class="pdf-name">Practice Exercise C-sharp</div>
+              <div class="pdf-meta">C# Programming · Exercise</div>
             </div>
           </div>
-          <span class="pdf-tag">C Programming</span>
+          <span class="pdf-tag">C# Programming</span>
           <div class="pdf-actions">
-            <a href="pdfs/c-programming/c-pointers.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/c-programming/c-pointers.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
-          </div>
-        </div>
-        <div class="pdf-card">
-          <div class="pdf-card-top">
-            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
-            <div class="pdf-info">
-              <div class="pdf-name">Functions &amp; Recursion</div>
-              <div class="pdf-meta">Week 5 · Lecture Notes</div>
-            </div>
-          </div>
-          <span class="pdf-tag">C Programming</span>
-          <div class="pdf-actions">
-            <a href="pdfs/c-programming/c-functions.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/c-programming/c-functions.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+            <a href="PDFs/c-sharp/Practice Excersice C-sharp.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/c-sharp/Practice Excersice C-sharp.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- JAVA PROGRAMMING PDFs -->
-    <div class="pdf-group" id="web-design" data-course="web-design">
-      <div class="pdf-group-header">
-        <div class="pdf-group-icon"><i class="bi bi-code-slash"></i></div>
-        <div class="pdf-group-title">JAVA Programming</div>
-      </div>
-      <div class="pdf-grid">
-        <div class="pdf-card">
-          <div class="pdf-card-top">
-            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
-            <div class="pdf-info">
-              <div class="pdf-name">HTML5 — Structure &amp; Semantic Elements</div>
-              <div class="pdf-meta">Week 1 · Lecture Notes</div>
-            </div>
-          </div>
-          <span class="pdf-tag">Web Designing</span>
-          <div class="pdf-actions">
-            <a href="pdfs/web-design/html5-intro.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/web-design/html5-intro.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
-          </div>
-        </div>
-        <div class="pdf-card">
-          <div class="pdf-card-top">
-            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
-            <div class="pdf-info">
-              <div class="pdf-name">CSS3 — Layouts &amp; Flexbox</div>
-              <div class="pdf-meta">Week 3 · Lecture Notes</div>
-            </div>
-          </div>
-          <span class="pdf-tag">Web Designing</span>
-          <div class="pdf-actions">
-            <a href="pdfs/web-design/css3-flexbox.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/web-design/css3-flexbox.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ENTREPRENEURSHIP SKILLS PDFs -->
+    <!-- ENTREPRENEURSHIP -->
     <div class="pdf-group" id="entrepreneurship" data-course="entrepreneurship">
       <div class="pdf-group-header">
-        <div class="pdf-group-icon"><i class="bi bi-briefcase"></i></div>
+        <div class="pdf-group-icon"><i class="bi bi-lightbulb"></i></div>
         <div class="pdf-group-title">Entrepreneurship Skills</div>
       </div>
       <div class="pdf-grid">
@@ -200,61 +143,159 @@
           <div class="pdf-card-top">
             <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
             <div class="pdf-info">
-              <div class="pdf-name">SQL Fundamentals — DDL &amp; DML</div>
-              <div class="pdf-meta">Week 2 · Lecture Notes</div>
+              <div class="pdf-name">Business Plan Format</div>
+              <div class="pdf-meta">Entrepreneurship · Lecture Notes</div>
             </div>
           </div>
-          <span class="pdf-tag">Database</span>
+          <span class="pdf-tag">Entrepreneurship</span>
           <div class="pdf-actions">
-            <a href="pdfs/database/sql-basics.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/database/sql-basics.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+            <a href="PDFs/Entrepreneurship/Business Plan Format.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/Business Plan Format.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
           </div>
         </div>
         <div class="pdf-card">
           <div class="pdf-card-top">
             <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
             <div class="pdf-info">
-              <div class="pdf-name">Normalisation — 1NF to 3NF</div>
-              <div class="pdf-meta">Week 5 · Lecture Notes</div>
+              <div class="pdf-name">Business Planning Notes</div>
+              <div class="pdf-meta">Entrepreneurship · Lecture Notes</div>
             </div>
           </div>
-          <span class="pdf-tag">Database</span>
+          <span class="pdf-tag">Entrepreneurship</span>
           <div class="pdf-actions">
-            <a href="pdfs/database/normalisation.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/database/normalisation.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+            <a href="PDFs/Entrepreneurship/Business Planning Notes.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/Business Planning Notes.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Concept of Entrepreneurship</div>
+              <div class="pdf-meta">Entrepreneurship · Unit One</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Entrepreneurship</span>
+          <div class="pdf-actions">
+            <a href="PDFs/Entrepreneurship/concept of entrepreneurship.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/concept of entrepreneurship.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Creativity Part 2</div>
+              <div class="pdf-meta">Entrepreneurship · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Entrepreneurship</span>
+          <div class="pdf-actions">
+            <a href="PDFs/Entrepreneurship/Creativity Part 2.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/Creativity Part 2.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Creativity Unit</div>
+              <div class="pdf-meta">Entrepreneurship · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Entrepreneurship</span>
+          <div class="pdf-actions">
+            <a href="PDFs/Entrepreneurship/Creativity unit.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/Creativity unit.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Entrepreneurship Ethics</div>
+              <div class="pdf-meta">Entrepreneurship · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Entrepreneurship</span>
+          <div class="pdf-actions">
+            <a href="PDFs/Entrepreneurship/Entrepreneurship Ethics.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/Entrepreneurship Ethics.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Small Media Enterprise</div>
+              <div class="pdf-meta">Entrepreneurship · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Entrepreneurship</span>
+          <div class="pdf-actions">
+            <a href="PDFs/Entrepreneurship/small media enterprise.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Entrepreneurship/small media enterprise.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- COMPUTER HARDWARE PDFs -->
-    <div class="pdf-group" id="computer-hardware" data-course="computer-hardware">
+    <!-- JAVA PROGRAMMING -->
+    <div class="pdf-group" id="java" data-course="java">
       <div class="pdf-group-header">
-        <div class="pdf-group-icon"><i class="bi bi-diagram-3"></i></div>
-        <div class="pdf-group-title">Computer Hardware</div>
+        <div class="pdf-group-icon"><i class="bi bi-cup-hot"></i></div>
+        <div class="pdf-group-title">Java Programming</div>
       </div>
       <div class="pdf-grid">
         <div class="pdf-card">
           <div class="pdf-card-top">
             <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
             <div class="pdf-info">
-              <div class="pdf-name">OSI Model — All 7 Layers</div>
-              <div class="pdf-meta">Week 2 · Lecture Notes</div>
+              <div class="pdf-name">Variables in Java</div>
+              <div class="pdf-meta">Java Programming · Lecture Notes</div>
             </div>
           </div>
-          <span class="pdf-tag">Networking</span>
+          <span class="pdf-tag">Java</span>
           <div class="pdf-actions">
-            <a href="pdfs/networking/osi-model.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/networking/osi-model.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+            <a href="PDFs/java/Variables in java.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/java/Variables in java.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Java Classes and Objects</div>
+              <div class="pdf-meta">Java Programming · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Java</span>
+          <div class="pdf-actions">
+            <a href="PDFs/java/java Classes and Objects.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/java/java Classes and Objects.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Java Methods and Packages</div>
+              <div class="pdf-meta">Java Programming · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Java</span>
+          <div class="pdf-actions">
+            <a href="PDFs/java/java Methods and Packages.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/java/java Methods and Packages.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- REAL-LIFE PROJECT II PDFs -->
-    <div class="pdf-group" id="real-life-project-ii" data-course="real-life-project-ii">
+    <!-- REAL-LIFE PROJECT II -->
+    <div class="pdf-group" id="real-life-project" data-course="real-life-project">
       <div class="pdf-group-header">
-        <div class="pdf-group-icon"><i class="bi bi-cpu"></i></div>
+        <div class="pdf-group-icon"><i class="bi bi-kanban"></i></div>
         <div class="pdf-group-title">Real-life Project II</div>
       </div>
       <div class="pdf-grid">
@@ -262,23 +303,45 @@
           <div class="pdf-card-top">
             <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
             <div class="pdf-info">
-              <div class="pdf-name">SDLC — Models &amp; Phases</div>
-              <div class="pdf-meta">Week 1 · Lecture Notes</div>
+              <div class="pdf-name">Guidelines to Project Selection</div>
+              <div class="pdf-meta">Real-life Project II · Lecture Notes</div>
             </div>
           </div>
-          <span class="pdf-tag">Systems Analysis</span>
+          <span class="pdf-tag">Real-life Project</span>
           <div class="pdf-actions">
-            <a href="pdfs/systems/sdlc.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
-            <a href="pdfs/systems/sdlc.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+            <a href="PDFs/Real-life Project II/Guidelines to project selection.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Real-life Project II/Guidelines to project selection.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
+          </div>
+        </div>
+        <div class="pdf-card">
+          <div class="pdf-card-top">
+            <div class="pdf-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+            <div class="pdf-info">
+              <div class="pdf-name">Introductory Lecture</div>
+              <div class="pdf-meta">Real-life Project II · Lecture Notes</div>
+            </div>
+          </div>
+          <span class="pdf-tag">Real-life Project</span>
+          <div class="pdf-actions">
+            <a href="PDFs/Real-life Project II/Introductory Lecture.pdf" target="_blank" class="pdf-btn pdf-btn-view"><i class="bi bi-eye"></i> View</a>
+            <a href="PDFs/Real-life Project II/Introductory Lecture.pdf" download class="pdf-btn pdf-btn-dl"><i class="bi bi-download"></i> Save</a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="upload-hint">
-      <i class="bi bi-folder-plus"></i>
-      <strong>To add your PDFs:</strong> Place your files in a <code>pdfs/[course-name]/</code> folder next to this HTML file, then update the links above to match your file names.
+    <!-- COMPUTER HARDWARE -->
+    <div class="pdf-group" id="computer-hardware" data-course="computer-hardware">
+      <div class="pdf-group-header">
+        <div class="pdf-group-icon"><i class="bi bi-motherboard"></i></div>
+        <div class="pdf-group-title">Computer Hardware</div>
+      </div>
+      <div class="coming-soon">
+        <i class="bi bi-clock-history"></i>
+        No materials uploaded yet — check back soon!
+      </div>
     </div>
+
   </div>
 
   <footer>Uganda Institute of Information Communication and Technology · LAB 112 · PCSE 2025</footer>
@@ -297,8 +360,6 @@
       });
     }
 
-    const hash = window.location.hash;
-    if (hash) { const t = document.querySelector(hash); if (t) { t.scrollIntoView({behavior:'smooth'}); } }
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   </script>
 </body>
