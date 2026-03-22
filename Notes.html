@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <title>Notes — LAB 112</title>
   <style>
@@ -43,7 +43,7 @@
     .sidebar-nav a.active{color:var(--amber);background:rgba(240,165,0,0.08);border-left-color:var(--amber);}
 
     /* CONTENT */
-    .content{position:relative;z-index:1;}
+    .content{}
     .page-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--teal-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
     .page-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal-light);}
     .page-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
@@ -100,11 +100,11 @@
     <aside class="sidebar">
       <div class="sidebar-label">Jump to</div>
       <ul class="sidebar-nav">
-        <li><a href="#c-programming"><i class="bi bi-braces"></i> C# Programming</a></li>
-        <li><a href="#web-design"><i class="bi bi-code-slash"></i> JAVA Programming</a></li>
-        <li><a href="#database"><i class="bi bi-database"></i> Entrepreneurship Skills</a></li>
-        <li><a href="#networking"><i class="bi bi-diagram-3"></i> Computer Hardware</a></li>
-        <li><a href="#systems"><i class="bi bi-cpu"></i> Real-life Project II</a></li>
+        <li><a href="#c-programming"><i class="bi bi-braces"></i> C Programming</a></li>
+        <li><a href="#web-design"><i class="bi bi-code-slash"></i> Web Designing</a></li>
+        <li><a href="#database"><i class="bi bi-database"></i> Database</a></li>
+        <li><a href="#networking"><i class="bi bi-diagram-3"></i> Networking</a></li>
+        <li><a href="#systems"><i class="bi bi-cpu"></i> Systems Analysis</a></li>
       </ul>
     </aside>
 
@@ -112,22 +112,31 @@
     <div class="content">
       <p class="page-eyebrow">Study Material</p>
       <h1 class="page-title">Course <span>Notes</span></h1>
-      <p class="page-sub">Key concepts and summaries from lectures. Use the search below to find any topic quickly.</p>
+      <p class="page-sub">Key concepts and summaries from lectures — coming soon.</p>
 
+      <!-- COMING SOON NOTICE -->
+      <div style="background:rgba(240,165,0,0.06);border:1px dashed rgba(240,165,0,0.3);border-radius:10px;padding:3rem 2rem;text-align:center;margin-top:1rem;">
+        <i class="bi bi-journal-text" style="font-size:2.5rem;color:var(--amber);display:block;margin-bottom:1rem;"></i>
+        <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--cream);margin-bottom:0.5rem;">Notes Coming Soon</div>
+        <div style="font-size:0.85rem;color:var(--text-dim);max-width:360px;margin:0 auto;line-height:1.7;">Lecture notes for all 5 courses are being prepared and will be published here shortly. Check back soon!</div>
+      </div>
+
+      <!-- REMOVE THE COMMENT TAGS BELOW WHEN NOTES ARE READY -->
+      <!--
       <div class="search-wrap">
         <i class="bi bi-search"></i>
         <input type="text" id="search" placeholder="Search notes — e.g. 'pointers', 'SQL joins', 'OSI model'..." />
       </div>
 
-      <!-- C# PROGRAMMING NOTES -->
-      <div class="note-section" id="c-programming">
+       <!-- C PROGRAMMING NOTES -->
+      <!-- <div class="note-section" id="c-programming">
         <div class="note-section-header">
           <div class="note-section-icon"><i class="bi bi-braces"></i></div>
-          <div><div class="note-section-num">COURSE 01</div><div class="note-section-title">C# Programming</div></div>
+          <div><div class="note-section-num">COURSE 01</div><div class="note-section-title">C Programming</div></div>
         </div>
 
         <div class="note-card">
-          <div class="note-card-title">Structure of a C# Program</div>
+          <div class="note-card-title">Structure of a C Program</div>
           <div class="note-body">
             <p>Every C program has a defined structure. The entry point is the <code>main()</code> function. Preprocessor directives like <code>#include &lt;stdio.h&gt;</code> are placed at the top to include standard libraries.</p>
             <p><strong>Basic structure:</strong> Preprocessor directives → Global declarations → <code>main()</code> function → User-defined functions.</p>
@@ -150,10 +159,10 @@
             <p><strong>Key rule:</strong> <code>*p</code> gives the value at the address stored in p (dereferencing). <code>&amp;x</code> gives the address of variable x. Pointers enable dynamic memory allocation using <code>malloc()</code> and <code>free()</code>.</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- WEB DESIGN NOTES -->
-      <div class="note-section" id="web-design">
+     <!--  <div class="note-section" id="web-design">
         <div class="note-section-header">
           <div class="note-section-icon"><i class="bi bi-code-slash"></i></div>
           <div><div class="note-section-num">COURSE 02</div><div class="note-section-title">Web Designing</div></div>
@@ -185,7 +194,7 @@
       </div>
 
       <!-- DATABASE NOTES -->
-      <div class="note-section" id="database">
+     <!--  <div class="note-section" id="database">
         <div class="note-section-header">
           <div class="note-section-icon"><i class="bi bi-database"></i></div>
           <div><div class="note-section-num">COURSE 03</div><div class="note-section-title">Database Programming</div></div>
@@ -214,10 +223,10 @@
             <p><strong>1NF:</strong> Each column contains atomic (indivisible) values; no repeating groups. <strong>2NF:</strong> In 1NF + all non-key columns fully depend on the primary key. <strong>3NF:</strong> In 2NF + no transitive dependencies (non-key column depending on another non-key column).</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- NETWORKING NOTES -->
-      <div class="note-section" id="networking">
+     <!--  <div class="note-section" id="networking">
         <div class="note-section-header">
           <div class="note-section-icon"><i class="bi bi-diagram-3"></i></div>
           <div><div class="note-section-num">COURSE 04</div><div class="note-section-title">Networking</div></div>
@@ -239,10 +248,10 @@
             <p><strong>Classes:</strong> Class A (1–126), Class B (128–191), Class C (192–223). Private IP ranges (not routable on the internet): <code>10.x.x.x</code>, <code>172.16–31.x.x</code>, <code>192.168.x.x</code>.</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- SYSTEMS ANALYSIS NOTES -->
-      <div class="note-section" id="systems">
+      <!-- <div class="note-section" id="systems">
         <div class="note-section-header">
           <div class="note-section-icon"><i class="bi bi-cpu"></i></div>
           <div><div class="note-section-num">COURSE 05</div><div class="note-section-title">Systems Analysis</div></div>
@@ -263,7 +272,8 @@
             <p><strong>Level 0 (Context Diagram):</strong> Shows the entire system as one process. <strong>Level 1:</strong> Breaks down the main process into sub-processes.</p>
           </div>
         </div>
-      </div>
+      </div> -->
+      <!-- END OF HIDDEN NOTES — remove this closing comment tag when ready -->
     </div>
   </div>
 
@@ -275,18 +285,20 @@
     hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
     document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); }});
 
-    // Search
+    // Search (only runs when notes are visible)
     const searchInput = document.getElementById('search');
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.toLowerCase();
-      document.querySelectorAll('.note-card').forEach(card => {
-        card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
-      });
-      document.querySelectorAll('.note-section').forEach(section => {
-        const visible = [...section.querySelectorAll('.note-card')].some(c => c.style.display !== 'none');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.toLowerCase();
+        document.querySelectorAll('.note-card').forEach(card => {
+          card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+        document.querySelectorAll('.note-section').forEach(section => {
+          const visible = [...section.querySelectorAll('.note-card')].some(c => c.style.display !== 'none');
         section.style.display = visible ? '' : 'none';
       });
     });
+  }
 
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   </script>
