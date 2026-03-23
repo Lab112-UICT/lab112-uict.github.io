@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0a1628" />
   <meta name="description" content="UICT LAB 112 - Professional Certificate in Software Engineering Student Portal" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <title>LAB 112 — UICT PCSE Portal</title>
   <style>
@@ -520,6 +520,7 @@
     .announcement {
       position: relative;
       z-index: 1;
+      margin-top: 4rem;
       background: rgba(13,148,136,0.08);
       border-top: 1px solid rgba(13,148,136,0.2);
       border-bottom: 1px solid rgba(13,148,136,0.2);
@@ -654,7 +655,7 @@
       .courses-grid { grid-template-columns: 1fr; }
       .hero-actions { flex-direction: column; }
       .btn-primary, .btn-ghost { justify-content: center; }
-      .hero-title { font-size: clamp(1.8rem, 9vw, 3rem); letter-spacing: -0.5px; }
+      .hero-title { font-size: clamp(1.8rem, 5vw, 2rem); letter-spacing: -0.5px; }
       .hero-stats { flex-wrap: wrap; }
     }
 
@@ -698,11 +699,12 @@
     <a href="Calendar.html">Calendar</a>
     <a href="login.html">Login</a>
   </div>
-
-  <!-- ANNOUNCEMENT STRIP -->
+  
+    <!-- ANNOUNCEMENT STRIP -->
   <div class="announcement">
     <span class="announcement-tag" style="background:var(--amber);color:var(--navy);">Urgent</span>
     <p class="announcement-text"><strong>Real-life Project II proposals due this Wednesday!</strong> — 8 project ideas now available in the <a href="PDFs.html#real-life-project" style="color:var(--amber);text-decoration:none;font-weight:600;">PDF Library <i class="bi bi-arrow-right" style="font-size:0.75rem;"></i></a></p>
+  </div>
   </div>
 
   <!-- HERO -->
@@ -746,32 +748,32 @@
     <div class="courses-grid">
       <a href="Courses.html#c-programming" class="course-card">
         <div class="course-icon"><i class="bi bi-braces"></i></div>
-        <div class="course-name">C Programming</div>
-        <div class="course-desc">Fundamentals of programming logic, syntax, and problem solving.</div>
+        <div class="course-name">C# Programming</div>
+        <div class="course-desc">Fundamentals of C# syntax, object-oriented programming, and .NET application development.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#web-design" class="course-card">
         <div class="course-icon"><i class="bi bi-code-slash"></i></div>
-        <div class="course-name">Web Designing</div>
-        <div class="course-desc">HTML, CSS, and the principles of building for the web.</div>
+        <div class="course-name">JAVA Programming</div>
+        <div class="course-desc">Master Java syntax, JVM architecture, and building robust, scalable software solutions.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#database" class="course-card">
         <div class="course-icon"><i class="bi bi-database"></i></div>
-        <div class="course-name">Database Programming</div>
-        <div class="course-desc">SQL, relational models, and database design patterns.</div>
+        <div class="course-name">Entreprenuership Skills</div>
+        <div class="course-desc">Business planning, market analysis, and the core principles of launching and managing a startup.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#networking" class="course-card">
         <div class="course-icon"><i class="bi bi-diagram-3"></i></div>
-        <div class="course-name">Networking</div>
-        <div class="course-desc">Computer networks, protocols, and communication systems.</div>
+        <div class="course-name">Computer Hardware</div>
+        <div class="course-desc">Exploration of physical components, assembly, maintenance, and low-level system architecture.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#systems" class="course-card">
         <div class="course-icon"><i class="bi bi-cpu"></i></div>
-        <div class="course-name">Systems Analysis</div>
-        <div class="course-desc">Software development lifecycle, design, and documentation.</div>
+        <div class="course-name">Real-life Project II</div>
+        <div class="course-desc">Practical application of the software development lifecycle through end-to-end project builds.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
     </div>
