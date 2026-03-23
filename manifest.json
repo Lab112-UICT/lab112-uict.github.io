@@ -2,7 +2,7 @@
   "name": "LAB 112 — UICT PCSE Portal",
   "short_name": "LAB 112",
   "description": "Student portal for UICT Professional Certificate in Software Engineering",
-  "start_url": "/LAB112/HomePage.html",
+  "start_url": "/HomePage.html",
   "display": "standalone",
   "background_color": "#0a1628",
   "theme_color": "#0a1628",

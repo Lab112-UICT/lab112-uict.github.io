@@ -4,20 +4,20 @@
 const CACHE_NAME = 'lab112-v2';
 
 const CORE_ASSETS = [
-  '/LAB112/HomePage.html',
-  '/LAB112/Courses.html',
-  '/LAB112/Notes.html',
-  '/LAB112/PDFs.html',
-  '/LAB112/Calendar.html',
-  '/LAB112/login.html',
-  '/LAB112/viewer.html',
-  '/LAB112/index.html',
-  '/LAB112/manifest.json',
-  '/LAB112/icons/bootstrap-icons.css',
-  '/LAB112/icons/fonts/bootstrap-icons.woff',
-  '/LAB112/icons/fonts/bootstrap-icons.woff2',
-  '/LAB112/icon-192.png',
-  '/LAB112/icon-512.png',
+  '/HomePage.html',
+  '/Courses.html',
+  '/Notes.html',
+  '/PDFs.html',
+  '/Calendar.html',
+  '/login.html',
+  '/viewer.html',
+  '/index.html',
+  '/manifest.json',
+  '/icons/bootstrap-icons.css',
+  '/icons/fonts/bootstrap-icons.woff',
+  '/icons/fonts/bootstrap-icons.woff2',
+  '/icon-192.png',
+  '/icon-512.png',
 ];
 
 // INSTALL — cache all core assets
@@ -56,7 +56,7 @@ self.addEventListener('fetch', (event) => {
       // If network fails on a PDF, return a simple offline message
       if (isPDF) {
         return new Response(
-          '<html><body style="background:#0a1628;color:#f5ede0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;"><div><h2 style="color:#f0a500;">You are offline</h2><p>PDFs require an internet connection.<br>Please connect and try again.</p><a href="/LAB112/PDFs.html" style="color:#14b8a6;">← Back to PDF Library</a></div></body></html>',
+          '<html><body style="background:#0a1628;color:#f5ede0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;"><div><h2 style="color:#f0a500;">You are offline</h2><p>PDFs require an internet connection.<br>Please connect and try again.</p><a href="/PDFs.html" style="color:#14b8a6;">← Back to PDF Library</a></div></body></html>',
           { headers: { 'Content-Type': 'text/html' } }
         );
       }
@@ -83,7 +83,7 @@ self.addEventListener('fetch', (event) => {
           .catch(() => {
             // Network failed and not in cache — show offline page
             if (event.request.destination === 'document') {
-              return caches.match('/LAB112/HomePage.html');
+              return caches.match('/HomePage.html');
             }
           });
       })
