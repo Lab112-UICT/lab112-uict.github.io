@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="icons/bootstrap-icons.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <title>Notes — LAB 112</title>
   <style>
-    :root{--navy:#0a1628;--navy-mid:#112240;--amber:#f0a500;--amber-light:#ffc94a;--cream:#f5ede0;--teal:#0d9488;--teal-light:#14b8a6;--text-dim:#8899aa;--card-bg:rgba(17,34,64,0.7);--border:rgba(240,165,0,0.2);--font-display:'Syne',sans-serif;--font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;}
+    :root{--navy:#0a1628;--amber:#f0a500;--amber-light:#ffc94a;--cream:#f5ede0;--teal:#0d9488;--teal-light:#14b8a6;--text-dim:#8899aa;--card-bg:rgba(17,34,64,0.7);--border:rgba(240,165,0,0.2);--font-display:'Syne',sans-serif;--font-mono:'Space Mono',monospace;--font-body:'Inter',sans-serif;}
     *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
     body{background-color:var(--navy);color:var(--cream);font-family:var(--font-body);overflow-x:hidden;}
     body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 20%,rgba(13,148,136,0.12) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(240,165,0,0.08) 0%,transparent 60%);pointer-events:none;z-index:0;}
@@ -35,20 +35,22 @@
     .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:6rem 2rem 4rem;display:grid;grid-template-columns:220px 1fr;gap:2.5rem;align-items:start;}
 
     /* SIDEBAR */
-    .sidebar{position:sticky;top:84px;}
+    .sidebar{position:sticky;top:84px;max-height:calc(100vh - 100px);overflow-y:auto;}
     .sidebar-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;}
-    .sidebar-nav{list-style:none;display:flex;flex-direction:column;gap:0.25rem;}
-    .sidebar-nav a{display:flex;align-items:center;gap:0.6rem;text-decoration:none;font-size:0.82rem;color:var(--text-dim);padding:0.5rem 0.75rem;border-radius:5px;transition:all 0.2s;border-left:2px solid transparent;}
+    .sidebar-course{font-family:var(--font-display);font-size:0.75rem;font-weight:700;color:var(--amber);letter-spacing:1px;text-transform:uppercase;margin:1rem 0 0.5rem;padding-left:0.75rem;}
+    .sidebar-nav{list-style:none;display:flex;flex-direction:column;gap:0.15rem;}
+    .sidebar-nav a{display:flex;align-items:center;gap:0.6rem;text-decoration:none;font-size:0.78rem;color:var(--text-dim);padding:0.4rem 0.75rem;border-radius:5px;transition:all 0.2s;border-left:2px solid transparent;}
     .sidebar-nav a:hover{color:var(--amber);background:rgba(240,165,0,0.06);border-left-color:var(--amber);}
     .sidebar-nav a.active{color:var(--amber);background:rgba(240,165,0,0.08);border-left-color:var(--amber);}
+    .sidebar-nav .coming{color:#3a4a5a;font-style:italic;cursor:default;font-size:0.72rem;}
+    .sidebar-nav .coming:hover{background:none;border-left-color:transparent;color:#3a4a5a;}
 
     /* CONTENT */
-    .content{}
     .page-eyebrow{font-family:var(--font-mono);font-size:0.72rem;color:var(--teal-light);letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
     .page-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--teal-light);}
     .page-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.05;margin-bottom:0.75rem;}
     .page-title span{color:var(--amber);}
-    .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:3rem;}
+    .page-sub{font-size:0.95rem;color:var(--text-dim);line-height:1.7;margin-bottom:2rem;}
 
     /* SEARCH */
     .search-wrap{position:relative;margin-bottom:2.5rem;}
@@ -57,37 +59,88 @@
     #search::placeholder{color:var(--text-dim);}
     #search:focus{border-color:rgba(240,165,0,0.5);}
 
+    /* COURSE HEADER */
+    .course-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid var(--border);}
+    .course-icon-lg{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.25);color:var(--amber);}
+    .course-num{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;}
+    .course-name{font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--cream);}
+
     /* NOTE SECTION */
-    .note-section{margin-bottom:3rem;scroll-margin-top:84px;}
-    .note-section-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);}
-    .note-section-icon{width:38px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);color:var(--amber);}
-    .note-section-title{font-family:var(--font-display);font-size:1.3rem;font-weight:700;}
-    .note-section-num{font-family:var(--font-mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:2px;}
+    .note-section{margin-bottom:2.5rem;scroll-margin-top:84px;}
+    .note-section-title{font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:var(--cream);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+    .note-section-title::before{content:'';display:inline-block;width:4px;height:1.1em;background:var(--amber);border-radius:2px;flex-shrink:0;}
 
     /* NOTE CARD */
     .note-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1rem;backdrop-filter:blur(8px);}
-    .note-card-title{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;}
-    .note-card-title::before{content:'';display:inline-block;width:6px;height:6px;background:var(--amber);border-radius:50%;}
-    .note-body{font-size:0.875rem;color:var(--text-dim);line-height:1.8;}
-    .note-body p{margin-bottom:0.75rem;}
+    .note-card.ahead{border-color:rgba(20,184,166,0.2);background:rgba(13,148,136,0.05);}
+    .note-card-title{font-family:var(--font-display);font-size:0.95rem;font-weight:700;color:var(--cream);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+    .note-card-title .badge{font-family:var(--font-mono);font-size:0.55rem;padding:0.15rem 0.5rem;border-radius:3px;letter-spacing:1px;text-transform:uppercase;}
+    .badge-covered{background:rgba(240,165,0,0.12);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
+    .badge-ahead{background:rgba(20,184,166,0.1);color:var(--teal-light);border:1px solid rgba(20,184,166,0.2);}
+
+    .note-body{font-size:0.875rem;color:var(--text-dim);line-height:1.85;}
+    .note-body p{margin-bottom:0.85rem;}
     .note-body p:last-child{margin-bottom:0;}
     .note-body strong{color:var(--cream);}
-    .note-body code{font-family:var(--font-mono);background:rgba(240,165,0,0.1);color:var(--amber-light);padding:0.15rem 0.4rem;border-radius:3px;font-size:0.8rem;}
-    .note-tag{display:inline-block;font-family:var(--font-mono);font-size:0.62rem;padding:0.15rem 0.5rem;border-radius:3px;margin-right:0.4rem;letter-spacing:1px;text-transform:uppercase;}
-    .note-tag-amber{background:rgba(240,165,0,0.12);color:var(--amber);border:1px solid rgba(240,165,0,0.2);}
-    .note-tag-teal{background:rgba(13,148,136,0.1);color:var(--teal-light);border:1px solid rgba(13,148,136,0.2);}
+    .note-body em{color:var(--amber-light);font-style:normal;}
+
+    /* INLINE CODE */
+    .note-body code{font-family:var(--font-mono);background:rgba(240,165,0,0.1);color:var(--amber-light);padding:0.15rem 0.4rem;border-radius:3px;font-size:0.78rem;}
+
+    /* CODE BLOCK */
+    .code-block{background:rgba(0,0,0,0.4);border:1px solid rgba(240,165,0,0.1);border-radius:8px;padding:1.25rem 1.25rem;margin:0.85rem 0;overflow-x:auto;}
+    .code-block pre{font-family:var(--font-mono);font-size:0.78rem;line-height:1.8;color:#e2e8f0;white-space:pre;}
+    .code-block .comment{color:#4a6741;}
+    .code-block .keyword{color:#c792ea;}
+    .code-block .type{color:#82aaff;}
+    .code-block .string{color:#c3e88d;}
+    .code-block .number{color:#f78c6c;}
+    .code-block .method{color:#82aaff;}
+    .code-block .output{color:var(--teal-light);}
+
+    /* REAL LIFE BOX */
+    .reallife-box{background:rgba(20,184,166,0.06);border:1px solid rgba(20,184,166,0.2);border-left:3px solid var(--teal-light);border-radius:0 8px 8px 0;padding:1rem 1.1rem;margin:0.85rem 0;}
+    .reallife-box .rl-label{font-family:var(--font-mono);font-size:0.62rem;color:var(--teal-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.4rem;}
+    .reallife-box p{font-size:0.83rem;color:var(--text-dim);line-height:1.7;}
+    .reallife-box p strong{color:var(--cream);}
+
+    /* TIP BOX */
+    .tip-box{background:rgba(240,165,0,0.05);border:1px solid rgba(240,165,0,0.15);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:1rem 1.1rem;margin:0.85rem 0;}
+    .tip-box .tip-label{font-family:var(--font-mono);font-size:0.62rem;color:var(--amber);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.4rem;}
+    .tip-box p{font-size:0.83rem;color:var(--text-dim);line-height:1.7;}
+    .tip-box p strong{color:var(--cream);}
+
+    /* WITHOUT/WITH COMPARISON */
+    .compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin:0.85rem 0;}
+    .compare-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:0.4rem;padding:0.2rem 0.5rem;border-radius:3px;display:inline-block;}
+    .compare-label.bad{background:rgba(251,113,133,0.1);color:#fb7185;}
+    .compare-label.good{background:rgba(20,184,166,0.1);color:var(--teal-light);}
+
+    /* DIVIDER BETWEEN COURSES */
+    .course-divider{border:none;border-top:1px solid var(--border);margin:3rem 0;}
+
+    /* COMING SOON SECTION */
+    .coming-soon-section{background:rgba(240,165,0,0.04);border:1px dashed rgba(240,165,0,0.15);border-radius:8px;padding:1.25rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+    .coming-soon-section i{color:var(--text-dim);font-size:1.1rem;flex-shrink:0;}
+    .coming-soon-section span{font-size:0.82rem;color:var(--text-dim);}
+    .coming-soon-section strong{color:var(--cream);}
 
     footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:0.78rem;color:var(--text-dim);}
 
     @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.sidebar{position:static;display:none;}}
-    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.mobile-nav{display:flex;}.page-wrap{padding:5rem 1.25rem 3rem;}.compare-wrap{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
   <nav class="navbar">
     <a href="HomePage.html" class="nav-logo">LAB<span>112</span></a>
     <ul class="nav-links">
-      <li><a href="HomePage.html">Home</a></li><li><a href="Courses.html">Courses</a></li><li><a href="Notes.html" class="active">Notes</a></li><li><a href="PDFs.html">PDFs</a></li><li><a href="Calendar.html">Calendar</a></li><li><a href="login.html" class="nav-cta">Login</a></li>
+      <li><a href="HomePage.html">Home</a></li>
+      <li><a href="Courses.html">Courses</a></li>
+      <li><a href="Notes.html" class="active">Notes</a></li>
+      <li><a href="PDFs.html">PDFs</a></li>
+      <li><a href="Calendar.html">Calendar</a></li>
+      <li><a href="login.html" class="nav-cta">Login</a></li>
     </ul>
     <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
   </nav>
@@ -99,12 +152,30 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-label">Jump to</div>
+
+      <div class="sidebar-course">C# Programming</div>
       <ul class="sidebar-nav">
-        <li><a href="#c-programming"><i class="bi bi-braces"></i> C# Programming</a></li>
-        <li><a href="#web-design"><i class="bi bi-code-slash"></i> JAVA Programming</a></li>
-        <li><a href="#database"><i class="bi bi-database"></i> Entrepreneurship Skills</a></li>
-        <li><a href="#networking"><i class="bi bi-diagram-3"></i> Computer Hardware</a></li>
-        <li><a href="#systems"><i class="bi bi-cpu"></i> Real Life Project II</a></li>
+        <li><a href="#csharp-variables"><i class="bi bi-hash"></i> Variables</a></li>
+        <li><a href="#csharp-display"><i class="bi bi-terminal"></i> Displaying Text</a></li>
+        <li><a href="#csharp-comments"><i class="bi bi-chat-left-text"></i> Comments</a></li>
+        <li><a href="#csharp-escape"><i class="bi bi-backslash"></i> Escape Sequences</a></li>
+        <li><a href="#csharp-arrays"><i class="bi bi-grid-3x3"></i> Arrays</a></li>
+        <li><a href="#csharp-methods"><i class="bi bi-braces"></i> Methods</a></li>
+        <li><a href="#csharp-classes"><i class="bi bi-boxes"></i> Classes &amp; Objects</a></li>
+        <li><a href="#csharp-access"><i class="bi bi-shield-lock"></i> Access Modifiers</a></li>
+        <li><a href="#csharp-inheritance"><i class="bi bi-diagram-2"></i> Inheritance</a></li>
+        <li><a href="#csharp-constructors"><i class="bi bi-gear"></i> Constructors <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#csharp-encapsulation"><i class="bi bi-lock"></i> Encapsulation <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#csharp-getset"><i class="bi bi-arrow-left-right"></i> Getters &amp; Setters <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#csharp-void"><i class="bi bi-x-circle"></i> Void Keyword <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#csharp-polymorphism"><i class="bi bi-layers"></i> Polymorphism <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#csharp-abstraction"><i class="bi bi-eye-slash"></i> Abstraction <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#csharp-interfaces"><i class="bi bi-plug"></i> Interfaces <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+      </ul>
+
+      <div class="sidebar-course" style="margin-top:1.5rem;">Java Programming</div>
+      <ul class="sidebar-nav">
+        <li><a class="coming">Coming soon...</a></li>
       </ul>
     </aside>
 
@@ -112,169 +183,670 @@
     <div class="content">
       <p class="page-eyebrow">Study Material</p>
       <h1 class="page-title">Course <span>Notes</span></h1>
-      <p class="page-sub">Key concepts and summaries from lectures — coming soon.</p>
+      <p class="page-sub">Clear, simple notes for every topic. Topics marked <span style="color:var(--teal-light);font-size:0.8rem;font-family:var(--font-mono);">↑ ahead</span> are coming up in class — read ahead and get a head start!</p>
 
-      <!-- COMING SOON NOTICE -->
-      <div style="background:rgba(240,165,0,0.06);border:1px dashed rgba(240,165,0,0.3);border-radius:10px;padding:3rem 2rem;text-align:center;margin-top:1rem;">
-        <i class="bi bi-journal-text" style="font-size:2.5rem;color:var(--amber);display:block;margin-bottom:1rem;"></i>
-        <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--cream);margin-bottom:0.5rem;">Notes Coming Soon</div>
-        <div style="font-size:0.85rem;color:var(--text-dim);max-width:360px;margin:0 auto;line-height:1.7;">Lecture notes for all 5 courses are being prepared and will be published here shortly. Check back soon!</div>
-      </div>
-
-      <!-- REMOVE THE COMMENT TAGS BELOW WHEN NOTES ARE READY -->
-      <!--
       <div class="search-wrap">
         <i class="bi bi-search"></i>
-        <input type="text" id="search" placeholder="Search notes — e.g. 'pointers', 'SQL joins', 'OSI model'..." />
+        <input type="text" id="search" placeholder="Search notes — e.g. 'arrays', 'inheritance', 'encapsulation'..." />
       </div>
 
-       <!-- C PROGRAMMING NOTES -->
-      <!-- <div class="note-section" id="c-programming">
-        <div class="note-section-header">
-          <div class="note-section-icon"><i class="bi bi-braces"></i></div>
-          <div><div class="note-section-num">COURSE 01</div><div class="note-section-title">C Programming</div></div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">Structure of a C Program</div>
-          <div class="note-body">
-            <p>Every C program has a defined structure. The entry point is the <code>main()</code> function. Preprocessor directives like <code>#include &lt;stdio.h&gt;</code> are placed at the top to include standard libraries.</p>
-            <p><strong>Basic structure:</strong> Preprocessor directives → Global declarations → <code>main()</code> function → User-defined functions.</p>
-            <p>The <code>printf()</code> function outputs to the screen. <code>scanf()</code> reads user input. Both require the <code>stdio.h</code> header.</p>
+      <!-- ═══════════════════════════════════════ -->
+      <!-- C# PROGRAMMING                          -->
+      <!-- ═══════════════════════════════════════ -->
+      <div id="csharp">
+        <div class="course-header">
+          <div class="course-icon-lg"><i class="bi bi-braces-asterisk"></i></div>
+          <div class="course-header-text">
+            <div class="course-num">COURSE 01</div>
+            <div class="course-name">C# Programming</div>
           </div>
         </div>
 
-        <div class="note-card">
-          <div class="note-card-title">Data Types & Variables</div>
-          <div class="note-body">
-            <p><strong>int</strong> — whole numbers. <strong>float</strong> — decimal numbers (6–7 digits precision). <strong>double</strong> — more precise decimals (15 digits). <strong>char</strong> — a single character. <strong>void</strong> — no value.</p>
-            <p>Variable declaration syntax: <code>datatype variableName = value;</code>. Constants use <code>const</code> keyword or <code>#define</code> directive. Variable names are case-sensitive and cannot start with a number.</p>
+        <!-- VARIABLES -->
+        <div class="note-section" id="csharp-variables">
+          <div class="note-section-title">Variables</div>
+
+          <div class="note-card">
+            <div class="note-card-title">What is a Variable? <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>A <strong>variable</strong> is a container that stores a value in your program. Think of it like a labelled box — the label is the variable name, and whatever is inside the box is the value.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Imagine a student register. Each student has a <strong>name</strong>, an <strong>age</strong>, and a <strong>score</strong>. In a program, each of those would be a separate variable holding a different value.</p>
+              </div>
+              <p>In C# you must tell the program <strong>what type of data</strong> the variable will hold before using it. This is called declaring a variable.</p>
+              <div class="code-block"><pre><span class="comment">// Syntax: dataType variableName = value;</span>
+<span class="type">int</span> age = <span class="number">20</span>;
+<span class="type">string</span> name = <span class="string">"Alice"</span>;
+<span class="type">double</span> score = <span class="number">85.5</span>;
+<span class="type">bool</span> isPassed = <span class="keyword">true</span>;</pre></div>
+              <p><strong>Common data types in C#:</strong></p>
+              <p>
+                <code>int</code> — whole numbers like 1, 20, 100<br/>
+                <code>double</code> — decimal numbers like 3.14, 85.5<br/>
+                <code>string</code> — text like "Hello" or "Alice"<br/>
+                <code>bool</code> — only true or false<br/>
+                <code>char</code> — a single character like 'A' or '9'
+              </p>
+              <div class="tip-box">
+                <div class="tip-label">Good to know</div>
+                <p>Variable names cannot start with a number, cannot have spaces, and are <strong>case sensitive</strong> — meaning <code>age</code> and <code>Age</code> are treated as two completely different variables.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="note-card">
-          <div class="note-card-title">Pointers</div>
-          <div class="note-body">
-            <p>A pointer is a variable that stores the <strong>memory address</strong> of another variable. Declared using <code>*</code>: e.g. <code>int *p;</code>. The <code>&amp;</code> operator gets the address of a variable.</p>
-            <p><strong>Key rule:</strong> <code>*p</code> gives the value at the address stored in p (dereferencing). <code>&amp;x</code> gives the address of variable x. Pointers enable dynamic memory allocation using <code>malloc()</code> and <code>free()</code>.</p>
+        <!-- DISPLAYING TEXT -->
+        <div class="note-section" id="csharp-display">
+          <div class="note-section-title">Displaying Text</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Console.Write and Console.WriteLine <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>To display text or values on the screen in C#, we use <code>Console.WriteLine()</code> or <code>Console.Write()</code>.</p>
+              <p><strong>The difference:</strong> <code>WriteLine</code> prints the text and then moves to a new line. <code>Write</code> prints the text and stays on the same line.</p>
+              <div class="code-block"><pre><span class="comment">// WriteLine — moves to next line after printing</span>
+Console.<span class="method">WriteLine</span>(<span class="string">"Hello, World!"</span>);
+Console.<span class="method">WriteLine</span>(<span class="string">"Welcome to LAB 112"</span>);
+
+<span class="comment">// Output:</span>
+<span class="output">Hello, World!
+Welcome to LAB 112</span>
+
+<span class="comment">// Write — stays on same line</span>
+Console.<span class="method">Write</span>(<span class="string">"Hello, "</span>);
+Console.<span class="method">Write</span>(<span class="string">"World!"</span>);
+
+<span class="comment">// Output:</span>
+<span class="output">Hello, World!</span></pre></div>
+              <p>You can also display the value of a variable by placing it inside the brackets:</p>
+              <div class="code-block"><pre><span class="type">string</span> name = <span class="string">"Alice"</span>;
+<span class="type">int</span> age = <span class="number">20</span>;
+
+Console.<span class="method">WriteLine</span>(name);
+Console.<span class="method">WriteLine</span>(<span class="string">"Age: "</span> + age);
+
+<span class="comment">// Output:</span>
+<span class="output">Alice
+Age: 20</span></pre></div>
+              <div class="tip-box">
+                <div class="tip-label">String Interpolation — cleaner way</div>
+                <p>Instead of joining with <code>+</code>, you can use <code>$</code> before the string and put variables in <code>{}</code>. This is called <strong>string interpolation</strong> and is much cleaner:</p>
+              </div>
+              <div class="code-block"><pre><span class="type">string</span> name = <span class="string">"Alice"</span>;
+<span class="type">int</span> age = <span class="number">20</span>;
+
+Console.<span class="method">WriteLine</span>(<span class="string">$"My name is {name} and I am {age} years old."</span>);
+
+<span class="comment">// Output:</span>
+<span class="output">My name is Alice and I am 20 years old.</span></pre></div>
+            </div>
           </div>
         </div>
-      </div> -->
 
-      <!-- WEB DESIGN NOTES -->
-     <!--  <div class="note-section" id="web-design">
-        <div class="note-section-header">
-          <div class="note-section-icon"><i class="bi bi-code-slash"></i></div>
-          <div><div class="note-section-num">COURSE 02</div><div class="note-section-title">Web Designing</div></div>
-        </div>
+        <!-- COMMENTS -->
+        <div class="note-section" id="csharp-comments">
+          <div class="note-section-title">Comments</div>
 
-        <div class="note-card">
-          <div class="note-card-title">The Box Model</div>
-          <div class="note-body">
-            <p>Every HTML element is a rectangular box. The CSS Box Model defines how space is calculated: <strong>Content → Padding → Border → Margin</strong>.</p>
-            <p>Use <code>box-sizing: border-box</code> so padding and border are included in the element's total width/height. This is the most predictable behaviour and is standard practice.</p>
+          <div class="note-card">
+            <div class="note-card-title">What are Comments? <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>A <strong>comment</strong> is a note you write inside your code that the computer completely ignores. It is only there for you or other developers reading the code to understand what is happening.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Think of comments like the notes a student writes in the margin of a textbook. The notes don't change the textbook content — they're just there to help the reader understand.</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// This is a single line comment</span>
+
+<span class="type">int</span> age = <span class="number">20</span>; <span class="comment">// This stores the student's age</span>
+
+<span class="comment">/* This is a
+   multi-line comment.
+   Use this for longer explanations. */</span>
+
+Console.<span class="method">WriteLine</span>(age); <span class="comment">// This prints the age</span></pre></div>
+              <div class="tip-box">
+                <div class="tip-label">Why comments matter</div>
+                <p>Good code with good comments is something any developer can pick up and understand. When you come back to your own code weeks later, comments remind you why you wrote something a certain way.</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="note-card">
-          <div class="note-card-title">Flexbox Essentials</div>
-          <div class="note-body">
-            <p>Flexbox is a one-dimensional layout system. Set <code>display: flex</code> on the parent. Key properties: <code>justify-content</code> (main axis alignment), <code>align-items</code> (cross axis alignment), <code>gap</code> (space between items).</p>
-            <p><strong>Common values:</strong> <code>flex-direction: row | column</code>, <code>flex-wrap: wrap</code>, <code>justify-content: center | space-between | space-around</code>.</p>
+        <!-- ESCAPE SEQUENCES -->
+        <div class="note-section" id="csharp-escape">
+          <div class="note-section-title">Escape Sequences</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Special Characters in Strings <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>Sometimes you need to include special characters inside a string — like a new line, a tab space, or even a quotation mark. You can't just type them directly so you use <strong>escape sequences</strong> which start with a backslash <code>\</code>.</p>
+              <div class="code-block"><pre><span class="comment">// \n — new line</span>
+Console.<span class="method">WriteLine</span>(<span class="string">"Hello\nWorld"</span>);
+<span class="output">Hello
+World</span>
+
+<span class="comment">// \t — tab space</span>
+Console.<span class="method">WriteLine</span>(<span class="string">"Name:\tAlice"</span>);
+<span class="output">Name:    Alice</span>
+
+<span class="comment">// \" — quotation mark inside a string</span>
+Console.<span class="method">WriteLine</span>(<span class="string">"She said \"Hello!\""</span>);
+<span class="output">She said "Hello!"</span>
+
+<span class="comment">// \\ — backslash itself</span>
+Console.<span class="method">WriteLine</span>(<span class="string">"C:\\Users\\Alice"</span>);
+<span class="output">C:\Users\Alice</span></pre></div>
+            </div>
           </div>
         </div>
 
-        <div class="note-card">
-          <div class="note-card-title">Responsive Design</div>
-          <div class="note-body">
-            <p>Responsive design ensures a website works well on all screen sizes. Key techniques: media queries (<code>@media (max-width: 768px)</code>), fluid widths using percentages or <code>vw</code>/<code>vh</code>, and flexible images with <code>max-width: 100%</code>.</p>
-            <p><strong>Mobile-first approach:</strong> Write default CSS for small screens, then add media queries for larger screens using <code>min-width</code>.</p>
+        <!-- ARRAYS -->
+        <div class="note-section" id="csharp-arrays">
+          <div class="note-section-title">Arrays</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Storing Multiple Values <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>An <strong>array</strong> is a variable that can hold <em>multiple values of the same type</em> in one place, instead of creating a separate variable for each value.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Instead of having <strong>seat1, seat2, seat3...</strong> in a classroom, you just have one <strong>seats[]</strong> array that holds all of them. A shelf of books is an array — one shelf, many books, each at a specific position.</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// Declaring an array — dataType[] arrayName = new dataType[size];</span>
+<span class="type">int</span>[] scores = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">3</span>];
+scores[<span class="number">0</span>] = <span class="number">85</span>;
+scores[<span class="number">1</span>] = <span class="number">90</span>;
+scores[<span class="number">2</span>] = <span class="number">78</span>;
+
+<span class="comment">// Shorter way — declare and fill at once</span>
+<span class="type">int</span>[] scores = { <span class="number">85</span>, <span class="number">90</span>, <span class="number">78</span> };
+
+<span class="comment">// Accessing values — index starts at 0</span>
+Console.<span class="method">WriteLine</span>(scores[<span class="number">0</span>]); <span class="comment">// prints 85</span>
+Console.<span class="method">WriteLine</span>(scores[<span class="number">2</span>]); <span class="comment">// prints 78</span></pre></div>
+              <div class="tip-box">
+                <div class="tip-label">Important — Index starts at 0!</div>
+                <p>The first item is always at position <code>0</code>, not <code>1</code>. So in an array of 3 items, the positions are <code>0</code>, <code>1</code>, and <code>2</code>. Trying to access position <code>3</code> would cause an error.</p>
+              </div>
+              <p>You can loop through an array using a <code>for</code> loop:</p>
+              <div class="code-block"><pre><span class="type">string</span>[] names = { <span class="string">"Alice"</span>, <span class="string">"Bob"</span>, <span class="string">"Charlie"</span> };
+
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; names.Length; i++)
+{
+    Console.<span class="method">WriteLine</span>(names[i]);
+}
+
+<span class="comment">// Output:</span>
+<span class="output">Alice
+Bob
+Charlie</span></pre></div>
+            </div>
           </div>
+        </div>
+
+        <!-- METHODS -->
+        <div class="note-section" id="csharp-methods">
+          <div class="note-section-title">Methods</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Reusable Blocks of Code <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>A <strong>method</strong> is a block of code that does a specific task and can be called (used) whenever you need it. Instead of writing the same code over and over, you write it once in a method and call it.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>printer</strong> is like a method. You press Print (call the method), it does its job (runs the code), and gives you the result. You don't need to know exactly how it works inside — you just call it and it delivers.</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// Defining a method</span>
+<span class="keyword">static</span> <span class="type">void</span> <span class="method">Greet</span>()
+{
+    Console.<span class="method">WriteLine</span>(<span class="string">"Hello, welcome to LAB 112!"</span>);
+}
+
+<span class="comment">// Calling the method</span>
+<span class="method">Greet</span>(); <span class="comment">// Output: Hello, welcome to LAB 112!</span></pre></div>
+              <p>Methods can also <strong>accept input</strong> (called parameters) and <strong>return output</strong>:</p>
+              <div class="code-block"><pre><span class="comment">// Method with parameters and return value</span>
+<span class="keyword">static</span> <span class="type">int</span> <span class="method">Add</span>(<span class="type">int</span> a, <span class="type">int</span> b)
+{
+    <span class="keyword">return</span> a + b;
+}
+
+<span class="comment">// Calling and using the result</span>
+<span class="type">int</span> result = <span class="method">Add</span>(<span class="number">5</span>, <span class="number">3</span>);
+Console.<span class="method">WriteLine</span>(result); <span class="comment">// Output: 8</span></pre></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLASSES AND OBJECTS -->
+        <div class="note-section" id="csharp-classes">
+          <div class="note-section-title">Classes &amp; Objects</div>
+
+          <div class="note-card">
+            <div class="note-card-title">The Blueprint and the Thing <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>A <strong>class</strong> is a blueprint or template. An <strong>object</strong> is something you create from that blueprint. C# is an Object-Oriented Programming (OOP) language — meaning almost everything is built around classes and objects.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>class</strong> is like an architect's house plan. The plan itself is not a house — it's just a blueprint. When you actually build a house using that plan, that built house is the <strong>object</strong>. You can build many houses (objects) from one plan (class).</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// Defining a class</span>
+<span class="keyword">class</span> <span class="type">Student</span>
+{
+    <span class="keyword">public</span> <span class="type">string</span> Name;
+    <span class="keyword">public</span> <span class="type">int</span> Age;
+
+    <span class="keyword">public</span> <span class="type">void</span> <span class="method">Introduce</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">$"Hi, I am {Name} and I am {Age} years old."</span>);
+    }
+}
+
+<span class="comment">// Creating an object from the class</span>
+<span class="type">Student</span> student1 = <span class="keyword">new</span> <span class="type">Student</span>();
+student1.Name = <span class="string">"Alice"</span>;
+student1.Age = <span class="number">20</span>;
+student1.<span class="method">Introduce</span>();
+
+<span class="comment">// Output:</span>
+<span class="output">Hi, I am Alice and I am 20 years old.</span></pre></div>
+              <p>The <strong>variables inside a class</strong> (like Name and Age) are called <em>fields</em> or <em>properties</em>. The <strong>methods inside a class</strong> describe what objects of that class can do.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCESS MODIFIERS -->
+        <div class="note-section" id="csharp-access">
+          <div class="note-section-title">Access Modifiers</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Controlling Who Can See What <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p><strong>Access modifiers</strong> control which parts of your program can access a class, method, or variable. They are used to protect your data and keep your code organised.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Think of a school building. Some rooms are <strong>public</strong> — anyone can walk in (like the canteen). Some rooms are <strong>private</strong> — only the teacher can enter (like the staff room). Some are <strong>protected</strong> — only teachers and their assistants can enter.</p>
+              </div>
+              <div class="code-block"><pre><span class="keyword">class</span> <span class="type">BankAccount</span>
+{
+    <span class="keyword">public</span> <span class="type">string</span> OwnerName;    <span class="comment">// anyone can access this</span>
+    <span class="keyword">private</span> <span class="type">double</span> balance;     <span class="comment">// only this class can access this</span>
+    <span class="keyword">protected</span> <span class="type">int</span> accountId;   <span class="comment">// this class and child classes</span>
+}</pre></div>
+              <p>The three most common access modifiers:</p>
+              <p>
+                <code>public</code> — accessible from anywhere in the program<br/>
+                <code>private</code> — only accessible within the same class<br/>
+                <code>protected</code> — accessible within the class and any class that inherits from it
+              </p>
+              <div class="tip-box">
+                <div class="tip-label">Without access modifiers</div>
+                <p>If you had no access modifiers, any part of your program could read or change your bank balance directly — that would be dangerous! Access modifiers keep sensitive data safe.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INHERITANCE -->
+        <div class="note-section" id="csharp-inheritance">
+          <div class="note-section-title">Inheritance</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Passing Down Properties <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p><strong>Inheritance</strong> allows one class to take (inherit) the properties and methods of another class. The class being inherited from is called the <em>parent class</em> or <em>base class</em>. The class that inherits is called the <em>child class</em> or <em>derived class</em>.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>Dog</strong> and a <strong>Cat</strong> are both Animals. Instead of writing "has a name", "can breathe", "can eat" separately for both, you create one <strong>Animal</strong> class with those properties — and both Dog and Cat <strong>inherit</strong> from Animal automatically. They get everything Animal has, plus their own unique things.</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// Parent class</span>
+<span class="keyword">class</span> <span class="type">Animal</span>
+{
+    <span class="keyword">public</span> <span class="type">string</span> Name;
+
+    <span class="keyword">public</span> <span class="type">void</span> <span class="method">Eat</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">$"{Name} is eating."</span>);
+    }
+}
+
+<span class="comment">// Child class — inherits from Animal using :</span>
+<span class="keyword">class</span> <span class="type">Dog</span> : <span class="type">Animal</span>
+{
+    <span class="keyword">public</span> <span class="type">void</span> <span class="method">Bark</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">$"{Name} says: Woof!"</span>);
+    }
+}
+
+<span class="comment">// Dog has both Eat() from Animal AND Bark() its own</span>
+<span class="type">Dog</span> myDog = <span class="keyword">new</span> <span class="type">Dog</span>();
+myDog.Name = <span class="string">"Rex"</span>;
+myDog.<span class="method">Eat</span>();   <span class="comment">// inherited from Animal</span>
+myDog.<span class="method">Bark</span>();  <span class="comment">// Dog's own method</span>
+
+<span class="comment">// Output:</span>
+<span class="output">Rex is eating.
+Rex says: Woof!</span></pre></div>
+              <div class="tip-box">
+                <div class="tip-label">Why inheritance matters</div>
+                <p>Without inheritance, you would have to rewrite the same code in every class. With inheritance, you write it once in the parent and all children get it automatically. This keeps your code <strong>clean, organised and easy to update</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONSTRUCTORS — READ AHEAD -->
+        <div class="note-section" id="csharp-constructors">
+          <div class="note-section-title">Constructors <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Setting Up an Object at Birth <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p>A <strong>constructor</strong> is a special method that runs <em>automatically</em> when you create an object. Its job is to set up the object with initial values right from the start.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>When a student joins UICT, they automatically get assigned a <strong>student ID, a name on the register, and a course</strong>. This "setup when you join" is exactly what a constructor does — it runs the moment the object is created.</p>
+              </div>
+              <div class="code-block"><pre><span class="keyword">class</span> <span class="type">Student</span>
+{
+    <span class="keyword">public</span> <span class="type">string</span> Name;
+    <span class="keyword">public</span> <span class="type">int</span> Age;
+
+    <span class="comment">// Constructor — same name as the class, no return type</span>
+    <span class="keyword">public</span> <span class="method">Student</span>(<span class="type">string</span> name, <span class="type">int</span> age)
+    {
+        Name = name;
+        Age = age;
+    }
+}
+
+<span class="comment">// Object is created AND set up in one line</span>
+<span class="type">Student</span> s1 = <span class="keyword">new</span> <span class="type">Student</span>(<span class="string">"Alice"</span>, <span class="number">20</span>);
+Console.<span class="method">WriteLine</span>(s1.Name); <span class="comment">// Alice</span></pre></div>
+              <p>Without a constructor you would have to manually set every property after creating the object. With a constructor it all happens in one step automatically.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENCAPSULATION — READ AHEAD -->
+        <div class="note-section" id="csharp-encapsulation">
+          <div class="note-section-title">Encapsulation <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Protecting Your Data <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Encapsulation</strong> means hiding the internal details of a class and only exposing what is necessary. You make fields <code>private</code> so they can't be directly changed from outside the class, then provide controlled access through methods.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>vending machine</strong> is perfectly encapsulated. You don't reach inside and grab a drink directly — you press a button (the public method) and the machine handles everything internally. The internal mechanism is hidden from you. You only interact with what's exposed.</p>
+              </div>
+              <div class="compare-wrap">
+                <div class="compare-block">
+                  <div class="compare-label bad">Without encapsulation</div>
+                  <div class="code-block"><pre><span class="keyword">class</span> <span class="type">BankAccount</span>
+{
+  <span class="keyword">public</span> <span class="type">double</span> balance;
+}
+
+<span class="comment">// Anyone can change it directly!</span>
+account.balance = <span class="number">-99999</span>;</pre></div>
+                </div>
+                <div class="compare-block">
+                  <div class="compare-label good">With encapsulation</div>
+                  <div class="code-block"><pre><span class="keyword">class</span> <span class="type">BankAccount</span>
+{
+  <span class="keyword">private</span> <span class="type">double</span> balance;
+
+  <span class="keyword">public</span> <span class="type">void</span> <span class="method">Deposit</span>(<span class="type">double</span> amt)
+  {
+    <span class="keyword">if</span> (amt > <span class="number">0</span>)
+      balance += amt;
+  }
+}</pre></div>
+                </div>
+              </div>
+              <p>With encapsulation, you control exactly how data is changed. Nobody can set the balance to a negative number directly — they have to go through your <code>Deposit</code> method which checks that the amount is valid first.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GETTERS AND SETTERS — READ AHEAD -->
+        <div class="note-section" id="csharp-getset">
+          <div class="note-section-title">Getters &amp; Setters <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Controlled Access to Private Data <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Getters and Setters</strong> are special methods that allow you to read (<em>get</em>) or change (<em>set</em>) a private variable in a controlled way. They work directly with encapsulation.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>temperature display</strong> in a room — you can <strong>see</strong> the temperature (get) and you can <strong>adjust</strong> the thermostat (set), but you can't directly reach into the wall and mess with the wiring. The thermostat is the setter — it lets you change the temperature but only within safe limits.</p>
+              </div>
+              <div class="code-block"><pre><span class="keyword">class</span> <span class="type">Student</span>
+{
+    <span class="keyword">private</span> <span class="type">int</span> age;
+
+    <span class="comment">// Getter — reads the value</span>
+    <span class="keyword">public</span> <span class="type">int</span> <span class="method">GetAge</span>()
+    {
+        <span class="keyword">return</span> age;
+    }
+
+    <span class="comment">// Setter — changes the value with a check</span>
+    <span class="keyword">public</span> <span class="type">void</span> <span class="method">SetAge</span>(<span class="type">int</span> value)
+    {
+        <span class="keyword">if</span> (value > <span class="number">0</span>)
+            age = value;
+    }
+}
+
+<span class="type">Student</span> s = <span class="keyword">new</span> <span class="type">Student</span>();
+s.<span class="method">SetAge</span>(<span class="number">20</span>);
+Console.<span class="method">WriteLine</span>(s.<span class="method">GetAge</span>()); <span class="comment">// 20</span></pre></div>
+              <p>C# also has a cleaner built-in way to write getters and setters using <strong>properties</strong>:</p>
+              <div class="code-block"><pre><span class="keyword">class</span> <span class="type">Student</span>
+{
+    <span class="keyword">private</span> <span class="type">int</span> age;
+
+    <span class="keyword">public</span> <span class="type">int</span> Age
+    {
+        get { <span class="keyword">return</span> age; }
+        set { <span class="keyword">if</span> (value > <span class="number">0</span>) age = value; }
+    }
+}
+
+<span class="type">Student</span> s = <span class="keyword">new</span> <span class="type">Student</span>();
+s.Age = <span class="number">20</span>;             <span class="comment">// calls the setter</span>
+Console.<span class="method">WriteLine</span>(s.Age); <span class="comment">// calls the getter → 20</span></pre></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOID KEYWORD -->
+        <div class="note-section" id="csharp-void">
+          <div class="note-section-title">The void Keyword <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Methods That Return Nothing <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><code>void</code> is used before a method name to indicate that the method <strong>does not return any value</strong>. It just performs an action and that's it.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>printer</strong> prints a document — it just does the job. It doesn't hand you back anything in return. Compare that to a <strong>calculator</strong> which takes numbers and gives you a result back. The printer is <code>void</code>. The calculator returns a value.</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// void — does something, returns nothing</span>
+<span class="keyword">static</span> <span class="type">void</span> <span class="method">PrintMessage</span>()
+{
+    Console.<span class="method">WriteLine</span>(<span class="string">"This method returns nothing!"</span>);
+}
+
+<span class="comment">// int — does something AND returns a number</span>
+<span class="keyword">static</span> <span class="type">int</span> <span class="method">AddNumbers</span>(<span class="type">int</span> a, <span class="type">int</span> b)
+{
+    <span class="keyword">return</span> a + b; <span class="comment">// must return an int</span>
+}</pre></div>
+              <p>Whenever you see <code>void</code> before a method, you know that calling it won't give you anything back — it just runs its instructions.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- POLYMORPHISM -->
+        <div class="note-section" id="csharp-polymorphism">
+          <div class="note-section-title">Polymorphism <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">One Name, Many Forms <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Polymorphism</strong> means "many forms." It allows the same method name to behave differently depending on which class is using it. This is one of the most powerful features of OOP.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>The word <strong>"speak"</strong> means something different depending on who does it. A dog speaks by barking. A cat speaks by meowing. A person speaks by talking. Same action — <code>Speak()</code> — completely different behaviour depending on the animal. That's polymorphism.</p>
+              </div>
+              <div class="code-block"><pre><span class="keyword">class</span> <span class="type">Animal</span>
+{
+    <span class="keyword">public virtual</span> <span class="type">void</span> <span class="method">Speak</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">"Some animal sound..."</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> : <span class="type">Animal</span>
+{
+    <span class="keyword">public override</span> <span class="type">void</span> <span class="method">Speak</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">"Woof!"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Cat</span> : <span class="type">Animal</span>
+{
+    <span class="keyword">public override</span> <span class="type">void</span> <span class="method">Speak</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">"Meow!"</span>);
+    }
+}
+
+<span class="type">Animal</span> a = <span class="keyword">new</span> <span class="type">Dog</span>();
+a.<span class="method">Speak</span>(); <span class="comment">// Output: Woof!</span>
+
+<span class="type">Animal</span> b = <span class="keyword">new</span> <span class="type">Cat</span>();
+b.<span class="method">Speak</span>(); <span class="comment">// Output: Meow!</span></pre></div>
+              <p>The keyword <code>virtual</code> in the parent says "this method can be overridden." The keyword <code>override</code> in the child says "I am replacing this method with my own version."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABSTRACTION -->
+        <div class="note-section" id="csharp-abstraction">
+          <div class="note-section-title">Abstraction <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Hiding Complexity, Showing Simplicity <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Abstraction</strong> means hiding the complex internal workings and only showing what the user needs to see. You define <em>what</em> something should do, not <em>how</em> it does it.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>When you drive a car, you use the <strong>steering wheel, accelerator and brakes</strong>. You don't need to understand how the engine, gearbox, or fuel injection work internally — all of that is hidden from you. You only see and use what you need. That's abstraction.</p>
+              </div>
+              <p>In C#, abstraction is achieved using <code>abstract</code> classes. An abstract class cannot be used to create objects directly — it just defines a template that other classes must follow.</p>
+              <div class="code-block"><pre><span class="comment">// Abstract class — cannot create objects from this directly</span>
+<span class="keyword">abstract class</span> <span class="type">Shape</span>
+{
+    <span class="comment">// Abstract method — no body, just the rule</span>
+    <span class="keyword">public abstract</span> <span class="type">double</span> <span class="method">GetArea</span>();
+}
+
+<span class="comment">// Circle must provide its own GetArea</span>
+<span class="keyword">class</span> <span class="type">Circle</span> : <span class="type">Shape</span>
+{
+    <span class="keyword">public</span> <span class="type">double</span> Radius;
+
+    <span class="keyword">public override</span> <span class="type">double</span> <span class="method">GetArea</span>()
+    {
+        <span class="keyword">return</span> <span class="number">3.14</span> * Radius * Radius;
+    }
+}
+
+<span class="type">Circle</span> c = <span class="keyword">new</span> <span class="type">Circle</span>();
+c.Radius = <span class="number">5</span>;
+Console.<span class="method">WriteLine</span>(c.<span class="method">GetArea</span>()); <span class="comment">// 78.5</span></pre></div>
+
+              <div class="tip-box">
+                <div class="tip-label">Abstraction vs Encapsulation — the difference</div>
+                <p>These two are often confused. Here is the clearest way to understand them:<br/><br/>
+                <strong>Encapsulation</strong> = <em>hiding data</em> — protecting your variables so they can't be directly changed from outside. It's about keeping data safe.<br/><br/>
+                <strong>Abstraction</strong> = <em>hiding complexity</em> — hiding how something works internally so the user only sees a simple interface. It's about keeping things simple to use.<br/><br/>
+                Encapsulation protects. Abstraction simplifies.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERFACES -->
+        <div class="note-section" id="csharp-interfaces">
+          <div class="note-section-title">Interfaces <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">A Contract a Class Must Follow <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p>An <strong>interface</strong> is like a contract. It says "any class that uses me <em>must</em> have these methods." The interface only defines <em>what</em> methods exist — never <em>how</em> they work. The class that uses the interface fills in the how.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>job description</strong> is an interface. It says "this employee must be able to: write reports, attend meetings, manage a team." It doesn't say how they do it — just that they must. When someone accepts the job (a class implements the interface), they commit to being able to do all those things.</p>
+              </div>
+              <div class="code-block"><pre><span class="comment">// Interface — defines the contract</span>
+<span class="keyword">interface</span> <span class="type">IAnimal</span>
+{
+    <span class="type">void</span> <span class="method">Speak</span>();   <span class="comment">// no body — just the rule</span>
+    <span class="type">void</span> <span class="method">Move</span>();
+}
+
+<span class="comment">// Dog agrees to the contract using :</span>
+<span class="keyword">class</span> <span class="type">Dog</span> : <span class="type">IAnimal</span>
+{
+    <span class="keyword">public</span> <span class="type">void</span> <span class="method">Speak</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">"Woof!"</span>);
+    }
+
+    <span class="keyword">public</span> <span class="type">void</span> <span class="method">Move</span>()
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">"Dog runs."</span>);
+    }
+}</pre></div>
+              <p>The difference between an <strong>interface</strong> and an <strong>abstract class</strong>:</p>
+              <p>
+                An <code>abstract class</code> can have some methods with code already written and some without. A class can only inherit from <em>one</em> abstract class.<br/><br/>
+                An <code>interface</code> has <em>no</em> method bodies at all — just rules. A class can implement <em>multiple</em> interfaces.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- END C# SECTION -->
+
+      <hr class="course-divider" />
+
+      <!-- JAVA COMING SOON -->
+      <div id="java">
+        <div class="course-header">
+          <div class="course-icon-lg"><i class="bi bi-cup-hot"></i></div>
+          <div class="course-header-text">
+            <div class="course-num">COURSE 02</div>
+            <div class="course-name">Java Programming</div>
+          </div>
+        </div>
+        <div class="coming-soon-section">
+          <i class="bi bi-journal-text"></i>
+          <span><strong>Other Course notes coming soon</strong> — JAVA, Entrepreneurship &amp; Computer Hardware, and more will be published here shortly.</span>
         </div>
       </div>
 
-      <!-- DATABASE NOTES -->
-     <!--  <div class="note-section" id="database">
-        <div class="note-section-header">
-          <div class="note-section-icon"><i class="bi bi-database"></i></div>
-          <div><div class="note-section-num">COURSE 03</div><div class="note-section-title">Database Programming</div></div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">SQL Basics</div>
-          <div class="note-body">
-            <p>SQL (Structured Query Language) is used to communicate with relational databases. It is divided into: <strong>DDL</strong> (Data Definition Language) — CREATE, ALTER, DROP; <strong>DML</strong> (Data Manipulation Language) — SELECT, INSERT, UPDATE, DELETE.</p>
-            <p>Basic query: <code>SELECT column FROM table WHERE condition;</code>. Always end SQL statements with a semicolon.</p>
-          </div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">Joins</div>
-          <div class="note-body">
-            <p>Joins combine rows from two or more tables based on a related column. <strong>INNER JOIN</strong> returns rows where there is a match in both tables. <strong>LEFT JOIN</strong> returns all rows from the left table plus matched rows from the right. <strong>RIGHT JOIN</strong> is the reverse.</p>
-            <p>Syntax: <code>SELECT a.col, b.col FROM tableA a INNER JOIN tableB b ON a.id = b.id;</code></p>
-          </div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">Normalisation</div>
-          <div class="note-body">
-            <p>Normalisation is the process of organising a database to reduce data redundancy and improve integrity.</p>
-            <p><strong>1NF:</strong> Each column contains atomic (indivisible) values; no repeating groups. <strong>2NF:</strong> In 1NF + all non-key columns fully depend on the primary key. <strong>3NF:</strong> In 2NF + no transitive dependencies (non-key column depending on another non-key column).</p>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- NETWORKING NOTES -->
-     <!--  <div class="note-section" id="networking">
-        <div class="note-section-header">
-          <div class="note-section-icon"><i class="bi bi-diagram-3"></i></div>
-          <div><div class="note-section-num">COURSE 04</div><div class="note-section-title">Networking</div></div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">The OSI Model</div>
-          <div class="note-body">
-            <p>The OSI (Open Systems Interconnection) model has 7 layers — a framework for understanding how data travels across a network.</p>
-            <p><strong>Layer 7 — Application:</strong> HTTP, FTP (what users interact with). <strong>Layer 4 — Transport:</strong> TCP/UDP, end-to-end delivery. <strong>Layer 3 — Network:</strong> IP addressing and routing. <strong>Layer 2 — Data Link:</strong> MAC addresses. <strong>Layer 1 — Physical:</strong> cables and signals.</p>
-            <p>Memory aid: <em>"All People Seem To Need Data Processing"</em> (Application → Physical).</p>
-          </div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">IP Addressing</div>
-          <div class="note-body">
-            <p>An IP address uniquely identifies a device on a network. IPv4 uses 32 bits written as four octets: e.g. <code>192.168.1.1</code>. Each octet ranges from 0–255.</p>
-            <p><strong>Classes:</strong> Class A (1–126), Class B (128–191), Class C (192–223). Private IP ranges (not routable on the internet): <code>10.x.x.x</code>, <code>172.16–31.x.x</code>, <code>192.168.x.x</code>.</p>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- SYSTEMS ANALYSIS NOTES -->
-      <!-- <div class="note-section" id="systems">
-        <div class="note-section-header">
-          <div class="note-section-icon"><i class="bi bi-cpu"></i></div>
-          <div><div class="note-section-num">COURSE 05</div><div class="note-section-title">Systems Analysis</div></div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">The SDLC</div>
-          <div class="note-body">
-            <p>The Software Development Life Cycle (SDLC) is a structured process for building software. Phases: <strong>Planning → Analysis → Design → Implementation → Testing → Deployment → Maintenance</strong>.</p>
-            <p>Common models include <strong>Waterfall</strong> (sequential, each phase completes before the next), <strong>Agile</strong> (iterative, work in short sprints), and <strong>Spiral</strong> (risk-driven, iterative).</p>
-          </div>
-        </div>
-
-        <div class="note-card">
-          <div class="note-card-title">Data Flow Diagrams (DFD)</div>
-          <div class="note-body">
-            <p>A DFD shows how data moves through a system. Key symbols: <strong>Process</strong> (circle/rectangle — transforms data), <strong>Data Store</strong> (open-ended rectangle — stores data), <strong>External Entity</strong> (square — outside the system), <strong>Data Flow</strong> (arrow — shows direction of data).</p>
-            <p><strong>Level 0 (Context Diagram):</strong> Shows the entire system as one process. <strong>Level 1:</strong> Breaks down the main process into sub-processes.</p>
-          </div>
-        </div>
-      </div> -->
-      <!-- END OF HIDDEN NOTES — remove this closing comment tag when ready -->
     </div>
+    <!-- END CONTENT -->
   </div>
 
   <footer>Uganda Institute of Information Communication and Technology · LAB 112 · PCSE 2025</footer>
@@ -285,20 +857,32 @@
     hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
     document.addEventListener('click', (e) => { if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) { hamburger.classList.remove('open'); mobileNav.classList.remove('open'); }});
 
-    // Search (only runs when notes are visible)
+    // Search
     const searchInput = document.getElementById('search');
-    if (searchInput) {
-      searchInput.addEventListener('input', () => {
-        const q = searchInput.value.toLowerCase();
-        document.querySelectorAll('.note-card').forEach(card => {
-          card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
-        });
-        document.querySelectorAll('.note-section').forEach(section => {
-          const visible = [...section.querySelectorAll('.note-card')].some(c => c.style.display !== 'none');
-        section.style.display = visible ? '' : 'none';
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      document.querySelectorAll('.note-card').forEach(card => {
+        const section = card.closest('.note-section');
+        card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+      document.querySelectorAll('.note-section').forEach(section => {
+        const visible = [...section.querySelectorAll('.note-card')].some(c => c.style.display !== 'none');
+        section.style.display = (q === '' || visible) ? '' : 'none';
       });
     });
-  }
+
+    // Sidebar active link on scroll
+    const sections = document.querySelectorAll('.note-section');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a:not(.coming)');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      sidebarLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
 
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   </script>
