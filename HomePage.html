@@ -828,6 +828,13 @@
     <button id="dismiss-btn" aria-label="Dismiss">✕</button>
   </div>
 
+  <!-- UPDATE NOTIFICATION BANNER -->
+  <div id="update-banner" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:200;background:var(--navy-mid);border:1px solid rgba(20,184,166,0.4);border-radius:10px;padding:1rem 1.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.5);align-items:center;gap:1rem;max-width:420px;width:calc(100% - 2rem);backdrop-filter:blur(20px);">
+    <div style="flex:1;font-size:0.85rem;color:var(--cream);"><strong style="color:var(--teal-light);display:block;margin-bottom:0.2rem;">Update Available!</strong>New content has been added to the portal.</div>
+    <button onclick="window.location.reload()" style="background:var(--teal-light);color:var(--navy);border:none;border-radius:5px;padding:0.5rem 1rem;font-family:var(--font-display);font-weight:700;font-size:0.82rem;cursor:pointer;white-space:nowrap;">Refresh</button>
+    <button onclick="document.getElementById('update-banner').style.display='none'" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1.1rem;padding:0.2rem;line-height:1;">✕</button>
+  </div>
+
   <script>
     // Hamburger menu
     const hamburger = document.getElementById('hamburger');
