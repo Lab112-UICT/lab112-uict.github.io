@@ -4,7 +4,7 @@
 //     e.g. lab112-v3 → lab112-v4
 //     This forces all installed apps to download the latest version.
 
-const CACHE_NAME = 'lab112-v5';
+const CACHE_NAME = 'lab112-v6';
 
 const CORE_ASSETS = [
   '/HomePage.html',
