@@ -847,7 +847,20 @@
 
       <div class="sidebar-course" style="margin-top:1.5rem;">Java Programming</div>
       <ul class="sidebar-nav">
-        <li><a class="coming">Coming soon...</a></li>
+        <li><a href="#java-intro"><i class="bi bi-cpu"></i> Introduction</a></li>
+        <li><a href="#java-fundamentals"><i class="bi bi-code"></i> Fundamentals</a></li>
+        <li><a href="#java-input"><i class="bi bi-keyboard"></i> User Input</a></li>
+        <li><a href="#java-control"><i class="bi bi-arrow-repeat"></i> Control Flow</a></li>
+        <li><a href="#java-arrays"><i class="bi bi-grid-3x3"></i> Arrays</a></li>
+        <li><a href="#java-oop"><i class="bi bi-boxes"></i> Classes &amp; Objects</a></li>
+        <li><a href="#java-inheritance"><i class="bi bi-diagram-2"></i> Inheritance</a></li>
+        <li><a href="#java-encapsulation"><i class="bi bi-lock"></i> Encapsulation <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#java-polymorphism"><i class="bi bi-layers"></i> Polymorphism <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#java-abstraction"><i class="bi bi-eye-slash"></i> Abstraction <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#java-interfaces"><i class="bi bi-plug"></i> Interfaces <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#java-exceptions"><i class="bi bi-exclamation-triangle"></i> Exceptions <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#java-io"><i class="bi bi-file-earmark-text"></i> I/O Streams <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
+        <li><a href="#java-database"><i class="bi bi-database"></i> Database <span style="font-size:0.6rem;color:var(--teal-light);">↑ ahead</span></a></li>
       </ul>
     </aside>
 
@@ -1649,7 +1662,9 @@ Console.<span class="method">WriteLine</span>(c.<span class="method">GetArea</sp
 
       <hr class="course-divider" />
 
-      <!-- JAVA COMING SOON -->
+      <!-- ═══════════════════════════════════════ -->
+      <!-- JAVA PROGRAMMING                        -->
+      <!-- ═══════════════════════════════════════ -->
       <div id="java">
         <div class="course-header">
           <div class="course-icon-lg"><i class="bi bi-cup-hot"></i></div>
@@ -1658,11 +1673,447 @@ Console.<span class="method">WriteLine</span>(c.<span class="method">GetArea</sp
             <div class="course-name">Java Programming</div>
           </div>
         </div>
-        <div class="coming-soon-section">
-          <i class="bi bi-journal-text"></i>
-          <span><strong>Java notes coming soon</strong> — Variables, Classes &amp; Objects, Methods &amp; Packages and
-            more will be published here shortly.</span>
+
+        <!-- INTRODUCTION -->
+        <div class="note-section" id="java-intro">
+          <div class="note-section-title">Introduction to Java</div>
+
+          <div class="note-card">
+            <div class="note-card-title">JVM, JRE, and JDK <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>Java's architecture is based on three main components: the <strong>JDK</strong>, <strong>JRE</strong>, and <strong>JVM</strong>. Together, they allow Java code to run on any device.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Imagine a kitchen. The <strong>JDK</strong> is the full kitchen with tools (compilers) to create recipes. The <strong>JRE</strong> is the kitchen appliances (libraries) needed to cook. The <strong>JVM</strong> is the chef who reads the recipe and cooks the dish.</p>
+              </div>
+              <p>Here is what each stands for:</p>
+              <p>
+                <code>JDK</code> (Java Development Kit) — Tools you need to <em>write</em> and <em>compile</em> Java code.<br />
+                <code>JRE</code> (Java Runtime Environment) — The environment required to <em>run</em> Java programs.<br />
+                <code>JVM</code> (Java Virtual Machine) — The engine that executes the code line-by-line.
+              </p>
+              <div class="tip-box">
+                <div class="tip-label">Write Once, Run Anywhere</div>
+                <p>Because the JVM exists for Windows, Mac, and Linux, your Java code is compiled into <strong>bytecode</strong>. Any JVM can understand this bytecode, which makes Java platform-independent.</p>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- FUNDAMENTALS -->
+        <div class="note-section" id="java-fundamentals">
+          <div class="note-section-title">Java Fundamentals</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Data Types and Variables <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>Like C#, Java is a <strong>strongly typed</strong> language. You must declare a variable's data type before assigning it a value.</p>
+              <div class="code-block">
+                <pre><span class="comment">// Declaring variables in Java</span>
+<span class="type">int</span> age = <span class="number">20</span>;
+<span class="type">double</span> price = <span class="number">19.99</span>;
+<span class="type">String</span> name = <span class="string">"Bob"</span>; <span class="comment">// String has a capital 'S' in Java!</span>
+<span class="type">boolean</span> isOnline = <span class="keyword">true</span>;</pre>
+              </div>
+              <p><strong>Common data types in Java:</strong></p>
+              <p>
+                <code>int</code> — whole numbers (e.g. 50)<br />
+                <code>double</code> — decimal numbers (e.g. 3.14)<br />
+                <code>String</code> — text (e.g. "Hello"). Note: uppercase S.<br />
+                <code>boolean</code> — true or false<br />
+                <code>char</code> — single character (e.g. 'A')
+              </p>
+              <div class="tip-box">
+                <div class="tip-label">Printing to the Console</div>
+                <p>Instead of <code>Console.WriteLine()</code> like in C#, Java uses <code>System.out.println()</code> to display output.</p>
+              </div>
+              <div class="code-block">
+                <pre>System.out.<span class="method">println</span>(<span class="string">"Hello from Java!"</span>);
+<span class="comment">// Output:</span>
+<span class="output">Hello from Java!</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- USER INPUT -->
+        <div class="note-section" id="java-input">
+          <div class="note-section-title">User Input</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Reading Data with Scanner <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>In Java, we use the <code>Scanner</code> class to read input from the user. It is part of the <code>java.util</code> package, so you must import it at the top of your file.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Think of a <strong>Scanner</strong> at a supermarket checkout. It reads the barcode (input) and brings the information into the cash register system. In Java, <code>Scanner</code> reads what you type on the keyboard and brings it into your variables.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">import</span> java.util.Scanner; <span class="comment">// 1. Import the Scanner class</span>
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+    <span class="keyword">public static void</span> <span class="method">main</span>(<span class="type">String</span>[] args) {
+        <span class="comment">// 2. Create a Scanner object connected to the keyboard</span>
+        <span class="type">Scanner</span> scanner = <span class="keyword">new</span> <span class="type">Scanner</span>(System.in);
+        
+        System.out.<span class="method">println</span>(<span class="string">"Enter your age:"</span>);
+        
+        <span class="comment">// 3. Read user input using the correct method</span>
+        <span class="type">int</span> age = scanner.<span class="method">nextInt</span>(); 
+        
+        System.out.<span class="method">println</span>(<span class="string">"You are "</span> + age + <span class="string">" years old."</span>);
+    }
+}</pre>
+              </div>
+              <p><strong>Common Scanner methods:</strong></p>
+              <p>
+                <code>nextLine()</code> — reads a full string of text (e.g. "John Doe")<br />
+                <code>next()</code> — reads a single word (e.g. "John")<br />
+                <code>nextInt()</code> — reads a whole number<br />
+                <code>nextDouble()</code> — reads a decimal number
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTROL FLOW -->
+        <div class="note-section" id="java-control">
+          <div class="note-section-title">Control Flow</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Decision Making and Loops <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>Control flow structures allow your program to make decisions (<code>if-else</code>) or repeat actions (<code>for</code> and <code>while</code> loops).</p>
+              <div class="code-block">
+                <pre><span class="comment">// If-Else Statement</span>
+<span class="type">int</span> score = <span class="number">85</span>;
+<span class="keyword">if</span> (score >= <span class="number">50</span>) {
+    System.out.<span class="method">println</span>(<span class="string">"Passed"</span>);
+} <span class="keyword">else</span> {
+    System.out.<span class="method">println</span>(<span class="string">"Failed"</span>);
+}
+
+<span class="comment">// For Loop</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) {
+    System.out.<span class="method">println</span>(<span class="string">"Iteration: "</span> + i);
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARRAYS -->
+        <div class="note-section" id="java-arrays">
+          <div class="note-section-title">Arrays</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Storing Multiple Values <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>An <strong>array</strong> is a variable that can hold <em>multiple values of the same type</em>. In Java, arrays have a fixed size — once you create it, you cannot change how many items it holds.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>An array is like a <strong>pill box</strong> with fixed compartments for Monday, Tuesday, Wednesday, etc. There are exactly 7 slots. You can put a pill in each slot, but you cannot suddenly add an 8th slot.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="comment">// 1. Declaring an array with a specific size</span>
+<span class="type">String</span>[] days = <span class="keyword">new</span> <span class="type">String</span>[<span class="number">3</span>];
+days[<span class="number">0</span>] = <span class="string">"Monday"</span>;
+days[<span class="number">1</span>] = <span class="string">"Tuesday"</span>;
+days[<span class="number">2</span>] = <span class="string">"Wednesday"</span>;
+
+<span class="comment">// 2. Shorter way (initializer list)</span>
+<span class="type">int</span>[] scores = { <span class="number">85</span>, <span class="number">90</span>, <span class="number">78</span> };
+
+<span class="comment">// Accessing items (index starts at 0)</span>
+System.out.<span class="method">println</span>(scores[<span class="number">0</span>]); <span class="comment">// Prints 85</span>
+System.out.<span class="method">println</span>(scores.length); <span class="comment">// Prints 3</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OOP CORE -->
+        <div class="note-section" id="java-oop">
+          <div class="note-section-title">Classes &amp; Objects</div>
+
+          <div class="note-card">
+            <div class="note-card-title">The Blueprint and the Thing <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>Everything in Java is associated with classes and objects. A <strong>class</strong> is a blueprint, and an <strong>object</strong> is an instance of it.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>class</strong> is like an architect's house plan. The plan itself is not a house. When you actually build a house using that plan, that built house is the <strong>object</strong>. You can build many houses (objects) from one plan (class).</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">class</span> <span class="type">Car</span> {
+    <span class="type">String</span> brand;
+    
+    <span class="keyword">public void</span> <span class="method">drive</span>() {
+        System.out.<span class="method">println</span>(brand + <span class="string">" is driving."</span>);
+    }
+}
+
+<span class="type">Car</span> myCar = <span class="keyword">new</span> <span class="type">Car</span>();
+myCar.brand = <span class="string">"Toyota"</span>;
+myCar.<span class="method">drive</span>(); <span class="comment">// Toyota is driving.</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INHERITANCE -->
+        <div class="note-section" id="java-inheritance">
+          <div class="note-section-title">Inheritance</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Passing Down Traits <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p><strong>Inheritance</strong> allows a new class to take the properties and methods of an existing class using the <code>extends</code> keyword. It promotes code reusability.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>Smartphone</strong> inherits from a general <strong>Phone</strong>. The general phone has a "call" feature. The smartphone automatically gets that "call" feature without rewriting it, and adds its own "browse internet" feature.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="comment">// Parent class</span>
+<span class="keyword">class</span> <span class="type">Phone</span> {
+    <span class="keyword">public void</span> <span class="method">call</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"Making a phone call..."</span>);
+    }
+}
+
+<span class="comment">// Child class uses 'extends' to inherit</span>
+<span class="keyword">class</span> <span class="type">SmartPhone</span> <span class="keyword">extends</span> <span class="type">Phone</span> {
+    <span class="keyword">public void</span> <span class="method">browse</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"Browsing the internet..."</span>);
+    }
+}
+
+<span class="type">SmartPhone</span> myPhone = <span class="keyword">new</span> <span class="type">SmartPhone</span>();
+myPhone.<span class="method">call</span>();   <span class="comment">// Inherited from Phone</span>
+myPhone.<span class="method">browse</span>(); <span class="comment">// SmartPhone's own method</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENCAPSULATION -->
+        <div class="note-section" id="java-encapsulation">
+          <div class="note-section-title">Encapsulation <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Protecting Data <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Encapsulation</strong> hides the internal state of an object and requires all interaction to be performed through an object's methods. We do this by making variables <code>private</code> and providing <code>public</code> <strong>getter</strong> and <strong>setter</strong> methods.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>bank ATM</strong>. You cannot reach inside the machine to change your balance directly (the money is <code>private</code>). You must use the keypad options to deposit or withdraw (the <code>public</code> setters/getters) which safely update your balance.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">class</span> <span class="type">Account</span> {
+    <span class="comment">// 1. Private data</span>
+    <span class="keyword">private double</span> balance;
+
+    <span class="comment">// 2. Public Setter (Controls how data changes)</span>
+    <span class="keyword">public void</span> <span class="method">setBalance</span>(<span class="type">double</span> amount) {
+        <span class="keyword">if</span> (amount > <span class="number">0</span>) {
+            <span class="keyword">this</span>.balance = amount;
+        }
+    }
+
+    <span class="comment">// 3. Public Getter (Allows reading data)</span>
+    <span class="keyword">public double</span> <span class="method">getBalance</span>() {
+        <span class="keyword">return</span> <span class="keyword">this</span>.balance;
+    }
+}
+
+<span class="type">Account</span> acc = <span class="keyword">new</span> <span class="type">Account</span>();
+acc.<span class="method">setBalance</span>(<span class="number">1000</span>);
+System.out.<span class="method">println</span>(acc.<span class="method">getBalance</span>()); <span class="comment">// 1000</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POLYMORPHISM -->
+        <div class="note-section" id="java-polymorphism">
+          <div class="note-section-title">Polymorphism <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Many Forms <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Polymorphism</strong> means "many forms". It occurs when we have many classes that are related to each other by inheritance. It allows us to perform a single action in different ways by overriding methods using <code>@Override</code>.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A person taking on <strong>many roles</strong>. At the mall, a person is a <em>Customer</em>. On a bus, the same person is a <em>Passenger</em>. At school, they are a <em>Student</em>. Same person, different behaviours based on the situation.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">class</span> <span class="type">Animal</span> {
+    <span class="keyword">public void</span> <span class="method">sound</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"Animal makes a sound"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Pig</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+    <span class="keyword">@Override</span> <span class="comment">// This tells Java we are replacing the parent method</span>
+    <span class="keyword">public void</span> <span class="method">sound</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"The pig says: wee wee"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="method">sound</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"The dog says: bow wow"</span>);
+    }
+}
+
+<span class="type">Animal</span> myAnimal = <span class="keyword">new</span> <span class="type">Pig</span>();
+myAnimal.<span class="method">sound</span>(); <span class="comment">// Outputs: The pig says: wee wee</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ABSTRACTION -->
+        <div class="note-section" id="java-abstraction">
+          <div class="note-section-title">Abstraction <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Hiding Complexity <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p><strong>Abstraction</strong> is the process of hiding certain details and showing only essential information to the user. We achieve this with <code>abstract</code> classes.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Sending an <strong>email</strong>. You just type the message, click "Send", and it delivers. You don't see the complex server routing, protocol handshakes, or data packaging happening in the background. That complexity is abstracted away.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="comment">// Abstract class: restricted class that cannot be used to create objects</span>
+<span class="keyword">abstract class</span> <span class="type">Animal</span> {
+    <span class="comment">// Abstract method: does not have a body</span>
+    <span class="keyword">public abstract void</span> <span class="method">animalSound</span>();
+    
+    <span class="comment">// Regular method</span>
+    <span class="keyword">public void</span> <span class="method">sleep</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"Zzz"</span>);
+    }
+}
+
+<span class="comment">// Subclass (inherit from Animal)</span>
+<span class="keyword">class</span> <span class="type">Pig</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+    <span class="keyword">public void</span> <span class="method">animalSound</span>() {
+        <span class="comment">// The body of animalSound() is provided here</span>
+        System.out.<span class="method">println</span>(<span class="string">"The pig says: wee wee"</span>);
+    }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERFACES -->
+        <div class="note-section" id="java-interfaces">
+          <div class="note-section-title">Interfaces <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Complete Abstraction <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p>An <strong>interface</strong> is a completely "abstract class" that is used to group related methods with empty bodies. A class uses the <code>implements</code> keyword to inherit the interface.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>A <strong>USB port</strong> is an interface. It defines a standard connection shape. Any device (mouse, keyboard, flash drive) that wants to plug into your laptop <strong>must implement</strong> that exact USB shape. The laptop doesn't care what the device does, only that it perfectly matches the interface.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">interface</span> <span class="type">Animal</span> {
+    <span class="keyword">public void</span> <span class="method">animalSound</span>(); <span class="comment">// interface method (does not have a body)</span>
+    <span class="keyword">public void</span> <span class="method">run</span>(); <span class="comment">// interface method (does not have a body)</span>
+}
+
+<span class="comment">// Pig "implements" the Animal interface</span>
+<span class="keyword">class</span> <span class="type">Pig</span> <span class="keyword">implements</span> <span class="type">Animal</span> {
+    <span class="keyword">public void</span> <span class="method">animalSound</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"The pig says: wee wee"</span>);
+    }
+    <span class="keyword">public void</span> <span class="method">run</span>() {
+        System.out.<span class="method">println</span>(<span class="string">"The pig is running"</span>);
+    }
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXCEPTION HANDLING -->
+        <div class="note-section" id="java-exceptions">
+          <div class="note-section-title">Exception Handling <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Try-Catch Blocks <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p>Exceptions are errors that occur while the program is running. We handle them using <code>try-catch</code> blocks to prevent the program from crashing.</p>
+              <div class="code-block">
+                <pre><span class="keyword">try</span> {
+    <span class="type">int</span> result = <span class="number">10</span> / <span class="number">0</span>; <span class="comment">// This causes an error</span>
+} <span class="keyword">catch</span> (<span class="type">ArithmeticException</span> e) {
+    System.out.<span class="method">println</span>(<span class="string">"Cannot divide by zero!"</span>);
+} <span class="keyword">finally</span> {
+    System.out.<span class="method">println</span>(<span class="string">"This block always runs."</span>);
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- I/O STREAMS -->
+        <div class="note-section" id="java-io">
+          <div class="note-section-title">I/O Streams <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Reading and Writing Files <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p>Java uses Streams to read from and write to files. A common approach for text files is using <code>Scanner</code> for reading and <code>FileWriter</code> for writing.</p>
+              <div class="code-block">
+                <pre><span class="keyword">import</span> java.io.FileWriter;
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">try</span> {
+    <span class="type">FileWriter</span> writer = <span class="keyword">new</span> <span class="type">FileWriter</span>(<span class="string">"notes.txt"</span>);
+    writer.<span class="method">write</span>(<span class="string">"Java I/O is powerful."</span>);
+    writer.<span class="method">close</span>();
+} <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+    System.out.<span class="method">println</span>(<span class="string">"An error occurred."</span>);
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DATABASE -->
+        <div class="note-section" id="java-database">
+          <div class="note-section-title">Database Connectivity <span style="font-size:0.75rem;color:var(--teal-light);font-family:var(--font-mono);font-weight:400;">↑ read ahead</span></div>
+
+          <div class="note-card ahead">
+            <div class="note-card-title">Connecting to SQL with JDBC <span class="badge badge-ahead">Read Ahead</span></div>
+            <div class="note-body">
+              <p>JDBC (Java Database Connectivity) allows Java applications to connect to relational databases like MySQL or PostgreSQL to execute queries and retrieve data.</p>
+              <div class="code-block">
+                <pre><span class="keyword">import</span> java.sql.Connection;
+<span class="keyword">import</span> java.sql.DriverManager;
+
+<span class="type">String</span> url = <span class="string">"jdbc:mysql://localhost:3306/labdb"</span>;
+<span class="type">String</span> user = <span class="string">"root"</span>;
+<span class="type">String</span> password = <span class="string">"password"</span>;
+
+<span class="keyword">try</span> {
+    <span class="type">Connection</span> conn = DriverManager.<span class="method">getConnection</span>(url, user, password);
+    System.out.<span class="method">println</span>(<span class="string">"Connected to database successfully!"</span>);
+} <span class="keyword">catch</span> (<span class="type">Exception</span> e) {
+    e.<span class="method">printStackTrace</span>();
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
