@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <link rel="icon" type="image/png" href="favicon pcse.png" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#081F5C" />
   <meta name="description" content="UICT LAB 112 - Professional Certificate in Software Engineering Student Portal" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="icons/bootstrap-icons.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet" />
   <title>LAB 112 — UICT PCSE Portal</title>
   <style>
     :root {
@@ -29,26 +33,35 @@
       --navy: var(--galaxy);
       --navy-mid: var(--planetary);
       --navy-light: var(--universe);
-      --amber: var(--sky); /* Primary Accent */
-      --amber-light: var(--milky-way); /* Hover state */
+      --amber: var(--sky);
+      /* Primary Accent */
+      --amber-light: var(--milky-way);
+      /* Hover state */
       --cream: var(--milky-way);
       --cream-dim: var(--meteor);
-      --teal: var(--venus); /* Secondary Accent */
+      --teal: var(--venus);
+      /* Secondary Accent */
       --teal-light: var(--universe);
       --white: #ffffff;
       --text-dim: var(--venus);
-      
+
       --card-bg: rgba(var(--planetary-rgb), 0.3);
       --border: rgba(var(--sky-rgb), 0.2);
-      
+
       --font-display: 'Syne', sans-serif;
       --font-mono: 'Space Mono', monospace;
       --font-body: 'Inter', sans-serif;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background-color: var(--navy);
@@ -87,7 +100,9 @@
     /* ─── NAVBAR ─── */
     .navbar {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
@@ -130,8 +145,13 @@
       text-transform: uppercase;
     }
 
-    .nav-links a:hover { color: var(--amber); }
-    .nav-links a.active { color: var(--amber); }
+    .nav-links a:hover {
+      color: var(--amber);
+    }
+
+    .nav-links a.active {
+      color: var(--amber);
+    }
 
     .nav-cta {
       background: var(--amber);
@@ -141,7 +161,11 @@
       font-weight: 700 !important;
       transition: background 0.2s !important;
     }
-    .nav-cta:hover { background: var(--amber-light) !important; color: var(--navy) !important; }
+
+    .nav-cta:hover {
+      background: var(--amber-light) !important;
+      color: var(--navy) !important;
+    }
 
     .hamburger {
       display: none;
@@ -152,6 +176,7 @@
       background: none;
       border: none;
     }
+
     .hamburger span {
       display: block;
       width: 24px;
@@ -160,15 +185,26 @@
       transition: all 0.3s;
       border-radius: 2px;
     }
-    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .hamburger.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
 
     /* Mobile nav drawer */
     .mobile-nav {
       display: none;
       position: fixed;
-      top: 64px; left: 0; right: 0;
+      top: 64px;
+      left: 0;
+      right: 0;
       background: rgba(var(--galaxy-rgb), 0.97);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
@@ -179,7 +215,11 @@
       transform: translateY(-110%);
       transition: transform 0.3s ease;
     }
-    .mobile-nav.open { transform: translateY(0); }
+
+    .mobile-nav.open {
+      transform: translateY(0);
+    }
+
     .mobile-nav a {
       display: block;
       padding: 1rem 0;
@@ -190,8 +230,14 @@
       border-bottom: 1px solid var(--border);
       transition: color 0.2s;
     }
-    .mobile-nav a:last-child { border-bottom: none; }
-    .mobile-nav a:hover { color: var(--amber); }
+
+    .mobile-nav a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-nav a:hover {
+      color: var(--amber);
+    }
 
     /* ─── HERO ─── */
     .hero {
@@ -235,13 +281,21 @@
       margin-bottom: 1rem;
     }
 
-    .hero-title .line1 { color: var(--cream); display: block; }
+    .hero-title .line1 {
+      color: var(--cream);
+      display: block;
+    }
+
     .hero-title .line2 {
       color: transparent;
       -webkit-text-stroke: 1px var(--amber);
       display: block;
     }
-    .hero-title .line3 { color: var(--amber); display: block; }
+
+    .hero-title .line3 {
+      color: var(--amber);
+      display: block;
+    }
 
     .hero-sub {
       font-family: var(--font-body);
@@ -274,6 +328,7 @@
       transition: all 0.2s;
       letter-spacing: 0.5px;
     }
+
     .btn-primary:hover {
       background: var(--amber-light);
       transform: translateY(-2px);
@@ -295,6 +350,7 @@
       text-decoration: none;
       transition: all 0.2s;
     }
+
     .btn-ghost:hover {
       border-color: var(--amber);
       color: var(--amber);
@@ -311,13 +367,19 @@
       flex-wrap: wrap;
     }
 
-    .stat { display: flex; flex-direction: column; gap: 0.25rem; }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
     .stat-num {
       font-family: var(--font-mono);
       font-size: 1.8rem;
       color: var(--amber);
       font-weight: 700;
     }
+
     .stat-label {
       font-size: 0.75rem;
       color: var(--text-dim);
@@ -345,6 +407,7 @@
       align-items: center;
       gap: 0.75rem;
     }
+
     .section-label::before {
       content: '';
       display: inline-block;
@@ -362,7 +425,9 @@
       margin-bottom: 1rem;
     }
 
-    .section-title span { color: var(--amber); }
+    .section-title span {
+      color: var(--amber);
+    }
 
     .section-desc {
       font-size: 0.95rem;
@@ -398,22 +463,29 @@
     .course-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 3px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
       background: var(--amber);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.3s;
     }
-    .course-card:hover::before { transform: scaleX(1); }
+
+    .course-card:hover::before {
+      transform: scaleX(1);
+    }
+
     .course-card:hover {
       border-color: rgba(var(--sky-rgb), 0.5);
       transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
     }
 
     .course-icon {
-      width: 44px; height: 44px;
+      width: 44px;
+      height: 44px;
       background: rgba(var(--sky-rgb), 0.15);
       border: 1px solid rgba(var(--sky-rgb), 0.3);
       border-radius: 8px;
@@ -424,6 +496,7 @@
       color: var(--amber);
       transition: background 0.2s;
     }
+
     .course-card:hover .course-icon {
       background: rgba(var(--sky-rgb), 0.25);
     }
@@ -452,6 +525,7 @@
       transform: translateX(-8px);
       transition: all 0.2s;
     }
+
     .course-card:hover .course-arrow {
       opacity: 1;
       transform: translateX(0);
@@ -481,11 +555,12 @@
     .feature-card:hover {
       border-color: rgba(var(--sky-rgb), 0.5);
       transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
     }
 
     .feature-icon-wrap {
-      width: 52px; height: 52px;
+      width: 52px;
+      height: 52px;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -498,11 +573,13 @@
       color: var(--teal-light);
       border: 1px solid rgba(var(--venus-rgb), 0.3);
     }
+
     .feature-icon-wrap.amber {
       background: rgba(var(--sky-rgb), 0.15);
       color: var(--amber);
       border: 1px solid rgba(var(--sky-rgb), 0.3);
     }
+
     .feature-icon-wrap.rose {
       background: rgba(var(--universe-rgb), 0.15);
       color: var(--universe);
@@ -565,7 +642,9 @@
       color: var(--text-dim);
     }
 
-    .announcement-text strong { color: var(--cream); }
+    .announcement-text strong {
+      color: var(--cream);
+    }
 
     /* ─── FOOTER ─── */
     .footer {
@@ -605,7 +684,7 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1rem 1.5rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       display: none;
       align-items: center;
       gap: 1rem;
@@ -614,10 +693,21 @@
       backdrop-filter: blur(20px);
     }
 
-    #install-banner.visible { display: flex; }
+    #install-banner.visible {
+      display: flex;
+    }
 
-    .install-text { font-size: 0.85rem; color: var(--cream); flex: 1; }
-    .install-text strong { color: var(--amber); display: block; margin-bottom: 0.2rem; }
+    .install-text {
+      font-size: 0.85rem;
+      color: var(--cream);
+      flex: 1;
+    }
+
+    .install-text strong {
+      color: var(--amber);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
 
     #install-btn {
       background: var(--amber);
@@ -632,7 +722,10 @@
       white-space: nowrap;
       transition: background 0.2s;
     }
-    #install-btn:hover { background: var(--amber-light); }
+
+    #install-btn:hover {
+      background: var(--amber-light);
+    }
 
     #dismiss-btn {
       background: none;
@@ -643,52 +736,130 @@
       padding: 0.2rem;
       line-height: 1;
     }
-    #dismiss-btn:hover { color: var(--cream); }
+
+    #dismiss-btn:hover {
+      color: var(--cream);
+    }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .mobile-nav { display: flex; }
+      .nav-links {
+        display: none;
+      }
 
-      .hero { padding: 5rem 1.25rem 3rem; }
-      .hero-stats { gap: 1.5rem; }
+      .hamburger {
+        display: flex;
+      }
 
-      .hero-eyebrow::before { display: none; }
-      .hero-eyebrow { font-size: 0.65rem; letter-spacing: 2px; }
+      .mobile-nav {
+        display: flex;
+      }
 
-      section { padding: 3.5rem 1.25rem; }
+      .hero {
+        padding: 5rem 1.25rem 3rem;
+      }
 
-      .courses-grid { grid-template-columns: 1fr 1fr; }
-      .features-row { grid-template-columns: 1fr; }
+      .hero-stats {
+        gap: 1.5rem;
+      }
 
-      .footer { flex-direction: column; align-items: flex-start; }
+      .hero-eyebrow::before {
+        display: none;
+      }
 
-      .announcement { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.85rem 1.25rem; }
-      .announcement-text { font-size: 0.8rem; }
+      .hero-eyebrow {
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+      }
+
+      section {
+        padding: 3.5rem 1.25rem;
+      }
+
+      .courses-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .features-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .announcement {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.85rem 1.25rem;
+      }
+
+      .announcement-text {
+        font-size: 0.8rem;
+      }
     }
 
     @media (max-width: 480px) {
-      .courses-grid { grid-template-columns: 1fr; }
-      .hero-actions { flex-direction: column; }
-      .btn-primary, .btn-ghost { justify-content: center; }
-      .hero-title { font-size: clamp(1.8rem, 5vw, 2rem); letter-spacing: -0.5px; }
-      .hero-stats { flex-wrap: wrap; }
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        justify-content: center;
+      }
+
+      .hero-title {
+        font-size: clamp(1.8rem, 5vw, 2rem);
+        letter-spacing: -0.5px;
+      }
+
+      .hero-stats {
+        flex-wrap: wrap;
+      }
     }
 
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
-    .hero-title { animation: fadeUp 0.6s 0.1s ease both; }
-    .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
-    .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
-    .hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+    .hero-eyebrow {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-title {
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-sub {
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .hero-stats {
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
   </style>
 </head>
+
 <body>
 
   <!-- NAVBAR -->
@@ -716,11 +887,13 @@
     <a href="Calendar.html">Calendar</a>
     <a href="login.html">Login</a>
   </div>
-  
-    <!-- ANNOUNCEMENT STRIP -->
+
+  <!-- ANNOUNCEMENT STRIP -->
   <div class="announcement">
     <span class="announcement-tag" style="background:var(--amber);color:var(--navy);">Urgent</span>
-    <p class="announcement-text"><strong> Check out the new PDFs</strong> — now available in the <a href="PDFs.html#real-life-project" style="color:var(--amber);text-decoration:none;font-weight:600;">PDF Library <i class="bi bi-arrow-right" style="font-size:0.75rem;"></i></a></p>
+    <p class="announcement-text"><strong> Check out the nee notes</strong> — now available in the <a href="Notes.html"
+        style="color:var(--amber);text-decoration:none;font-weight:600;">Notes <i class="bi bi-arrow-right"
+          style="font-size:0.75rem;"></i></a></p>
   </div>
   </div>
 
@@ -739,7 +912,8 @@
       <span class="line2">LAB</span>
       <span class="line3">112</span>
     </h1>
-    <p class="hero-sub">Your student portal for course materials, notes, PDF resources, and coursework deadlines — all in one place.</p>
+    <p class="hero-sub">Your student portal for course materials, notes, PDF resources, and coursework deadlines — all
+      in one place.</p>
     <div class="hero-actions">
       <a href="Courses.html" class="btn-primary">
         <i class="bi bi-grid-3x3-gap-fill"></i> View Courses
@@ -773,31 +947,36 @@
       <a href="Courses.html#c-programming" class="course-card">
         <div class="course-icon"><i class="bi bi-braces"></i></div>
         <div class="course-name">C# Programming</div>
-        <div class="course-desc">Fundamentals of C# syntax, object-oriented programming, and .NET application development.</div>
+        <div class="course-desc">Fundamentals of C# syntax, object-oriented programming, and .NET application
+          development.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#web-design" class="course-card">
         <div class="course-icon"><i class="bi bi-code-slash"></i></div>
         <div class="course-name">JAVA Programming</div>
-        <div class="course-desc">Master Java syntax, JVM architecture, and building robust, scalable software solutions.</div>
+        <div class="course-desc">Master Java syntax, JVM architecture, and building robust, scalable software solutions.
+        </div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#database" class="course-card">
         <div class="course-icon"><i class="bi bi-database"></i></div>
         <div class="course-name">Entreprenuership Skills</div>
-        <div class="course-desc">Business planning, market analysis, and the core principles of launching and managing a startup.</div>
+        <div class="course-desc">Business planning, market analysis, and the core principles of launching and managing a
+          startup.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#networking" class="course-card">
         <div class="course-icon"><i class="bi bi-diagram-3"></i></div>
         <div class="course-name">Computer Hardware</div>
-        <div class="course-desc">Exploration of physical components, assembly, maintenance, and low-level system architecture.</div>
+        <div class="course-desc">Exploration of physical components, assembly, maintenance, and low-level system
+          architecture.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
       <a href="Courses.html#systems" class="course-card">
         <div class="course-icon"><i class="bi bi-cpu"></i></div>
         <div class="course-name">Real-life Project II</div>
-        <div class="course-desc">Practical application of the software development lifecycle through end-to-end project builds.</div>
+        <div class="course-desc">Practical application of the software development lifecycle through end-to-end project
+          builds.</div>
         <div class="course-arrow"><i class="bi bi-arrow-right"></i> Open course</div>
       </a>
     </div>
@@ -813,7 +992,8 @@
         <div class="feature-icon-wrap teal"><i class="bi bi-file-earmark-pdf"></i></div>
         <div>
           <div class="feature-title">PDF Library</div>
-          <div class="feature-desc">All your lecture PDFs organised by subject. No more hunting through your downloads folder.</div>
+          <div class="feature-desc">All your lecture PDFs organised by subject. No more hunting through your downloads
+            folder.</div>
         </div>
         <div class="feature-link">Browse PDFs <i class="bi bi-arrow-right"></i></div>
       </a>
@@ -821,7 +1001,8 @@
         <div class="feature-icon-wrap amber"><i class="bi bi-journal-text"></i></div>
         <div>
           <div class="feature-title">Course Notes</div>
-          <div class="feature-desc">Key concepts from lectures written out and formatted for easy reading and revision.</div>
+          <div class="feature-desc">Key concepts from lectures written out and formatted for easy reading and revision.
+          </div>
         </div>
         <div class="feature-link">Read Notes <i class="bi bi-arrow-right"></i></div>
       </a>
@@ -829,7 +1010,8 @@
         <div class="feature-icon-wrap rose"><i class="bi bi-calendar-check"></i></div>
         <div>
           <div class="feature-title">Deadline Calendar</div>
-          <div class="feature-desc">Coursework deadlines, test dates, and important academic events all in one calendar.</div>
+          <div class="feature-desc">Coursework deadlines, test dates, and important academic events all in one calendar.
+          </div>
         </div>
         <div class="feature-link">View Calendar <i class="bi bi-arrow-right"></i></div>
       </a>
@@ -896,8 +1078,9 @@
 
     // Register service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
+      navigator.serviceWorker.register('sw.js').catch(() => { });
     }
   </script>
 </body>
+
 </html>
