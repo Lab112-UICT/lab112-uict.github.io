@@ -826,6 +826,7 @@
         <li><a href="#csharp-comments"><i class="bi bi-chat-left-text"></i> Comments</a></li>
         <li><a href="#csharp-escape"><i class="bi bi-backslash"></i> Escape Sequences</a></li>
         <li><a href="#csharp-arrays"><i class="bi bi-grid-3x3"></i> Arrays</a></li>
+        <li><a href="#csharp-loops"><i class="bi bi-arrow-repeat"></i> Loops</a></li>
         <li><a href="#csharp-methods"><i class="bi bi-braces"></i> Methods</a></li>
         <li><a href="#csharp-classes"><i class="bi bi-boxes"></i> Classes &amp; Objects</a></li>
         <li><a href="#csharp-access"><i class="bi bi-shield-lock"></i> Access Modifiers</a></li>
@@ -844,7 +845,7 @@
         <li><a href="#java-intro"><i class="bi bi-cpu"></i> Introduction</a></li>
         <li><a href="#java-fundamentals"><i class="bi bi-code"></i> Fundamentals</a></li>
         <li><a href="#java-input"><i class="bi bi-keyboard"></i> User Input</a></li>
-        <li><a href="#java-control"><i class="bi bi-arrow-repeat"></i> Control Flow</a></li>
+        <li><a href="#java-loops"><i class="bi bi-arrow-repeat"></i> Loops</a></li>
         <li><a href="#java-arrays"><i class="bi bi-grid-3x3"></i> Arrays</a></li>
         <li><a href="#java-oop"><i class="bi bi-boxes"></i> Classes &amp; Objects</a></li>
         <li><a href="#java-inheritance"><i class="bi bi-diagram-2"></i> Inheritance</a></li>
@@ -1099,6 +1100,158 @@ Console.<span class="method">WriteLine</span>(scores[<span class="number">2</spa
 Bob
 Charlie</span></pre>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOOPS -->
+        <div class="note-section" id="csharp-loops">
+          <div class="note-section-title">Loops</div>
+
+          <div class="note-card">
+            <div class="note-card-title">Repeating Actions <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              <p>A <strong>loop</strong> allows you to repeat a block of code multiple times. This saves you from writing the same code over and over again.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Imagine a music playlist set to <strong>Repeat</strong>. It plays the songs (the code) until the playlist ends, and then starts again. It keeps looping until you hit stop (the condition becomes false).</p>
+              </div>
+              <p>There are four main types of loops in C#:</p>
+              
+              <div class="tip-box">
+                <div class="tip-label">1. The 'for' Loop</div>
+                <p>Use this when you know <strong>exactly how many times</strong> you want to loop. The <code>for</code> loop has three distinct parts that control its flow:</p>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem; font-size: 0.9rem;">
+                  <li style="margin-bottom: 0.25rem;"><strong>Start <code>(int i = 1)</code>:</strong> This creates a counter variable. It only runs <em>once</em> at the very beginning.</li>
+                  <li style="margin-bottom: 0.25rem;"><strong>Stop <code>(i &lt;= 3)</code>:</strong> This is the condition. The loop keeps running as long as this is true. It checks this <em>before</em> every loop.</li>
+                  <li><strong>Step <code>(i++)</code>:</strong> This updates the counter (adds 1). It runs at the <em>end</em> of every loop.</li>
+                </ul>
+              </div>
+              <div class="code-block">
+                <pre><span class="comment">// 1. Start at 1 | 2. Check if &lt;= 3 | 4. Increase by 1</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) 
+{
+    <span class="comment">// 3. Run this code</span>
+    Console.<span class="method">WriteLine</span>(<span class="string">"Count: "</span> + i);
+}</pre>
+              </div>
+              
+              <div class="tip-box">
+                <div class="tip-label">2. The 'while' Loop</div>
+                <p>Use this when you want to loop <strong>as long as a condition is true</strong>.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">int</span> health = <span class="number">3</span>;
+<span class="keyword">while</span> (health > <span class="number">0</span>) 
+{
+    Console.<span class="method">WriteLine</span>(<span class="string">"Still alive!"</span>);
+    health--; <span class="comment">// decreases health</span>
+}</pre>
+              </div>
+
+              <div class="tip-box">
+                <div class="tip-label">3. The 'do-while' Loop</div>
+                <p>Similar to <code>while</code>, but it <strong>always runs at least once</strong> before checking the condition.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">int</span> attempts = <span class="number">0</span>;
+<span class="keyword">do</span> 
+{
+    Console.<span class="method">WriteLine</span>(<span class="string">"Trying connection..."</span>);
+    attempts++;
+} <span class="keyword">while</span> (attempts &lt; <span class="number">1</span>);</pre>
+              </div>
+
+              <div class="tip-box">
+                <div class="tip-label">4. The 'foreach' Loop</div>
+                <p>Use this to easily loop through items in an <strong>array</strong> or a collection.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">string</span>[] cars = {<span class="string">"Volvo"</span>, <span class="string">"BMW"</span>, <span class="string">"Ford"</span>};
+<span class="keyword">foreach</span> (<span class="type">string</span> i <span class="keyword">in</span> cars) 
+{
+    Console.<span class="method">WriteLine</span>(i);
+}</pre>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="note-card">
+            <div class="note-card-title">Advanced Loop Techniques <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              
+              <div class="tip-box">
+                <div class="tip-label">Nested Loops (Loops inside Loops)</div>
+                <p>You can place a loop inside another loop. The "inner loop" will finish all of its iterations for <em>every single iteration</em> of the "outer loop".</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) <span class="comment">// Outer loop (runs 2 times)</span>
+{
+    Console.<span class="method">WriteLine</span>(<span class="string">"Outer: "</span> + i);
+    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">3</span>; j++) <span class="comment">// Inner loop (runs 3 times per outer)</span>
+    {
+        Console.<span class="method">WriteLine</span>(<span class="string">"  Inner: "</span> + j);
+    }
+}
+<span class="comment">// Total inner runs = 2 x 3 = 6 times</span></pre>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>How it works:</strong><br>
+              1. The outer loop starts with <code>i = 1</code>.<br>
+              2. It prints "Outer: 1".<br>
+              3. Then, the inner loop starts. It runs completely from <code>j = 1</code> to <code>j = 3</code>, printing "Inner: 1", "Inner: 2", and "Inner: 3".<br>
+              4. The inner loop finishes, and the outer loop moves to its second step (<code>i = 2</code>).<br>
+              5. The inner loop starts completely over again from 1 to 3. Think of it like hours (outer) and minutes (inner) on a clock.</p>
+
+              <div class="tip-box">
+                <div class="tip-label">Reversing a Loop</div>
+                <p>You don't always have to count up using <code>i++</code>. You can count backwards using <code>i--</code>. This is useful for displaying lists from the bottom up.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="comment">// Counting backwards from 5 down to 1</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">5</span>; i &gt; <span class="number">0</span>; i--) 
+{
+    Console.<span class="method">WriteLine</span>(i);
+}
+<span class="comment">// Output: 5, 4, 3, 2, 1</span></pre>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>How it works:</strong><br>
+              1. <strong>Start:</strong> We start with <code>i = 5</code> instead of 0.<br>
+              2. <strong>Stop:</strong> The condition is <code>i &gt; 0</code>. As long as the number is greater than zero, the loop keeps running.<br>
+              3. <strong>Step:</strong> Instead of <code>i++</code> (add 1), we use <code>i--</code> (subtract 1). It prints 5, subtracts 1 to become 4, prints 4, and so on until it hits 0 and stops.</p>
+
+              <div class="tip-box">
+                <div class="tip-label">Interactive Example: Storing Input in an Array</div>
+                <p>This is a classic program: Ask the user for 3 names, use a loop to store them in an array, and use another loop to print them back out.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">string</span>[] students = <span class="keyword">new</span> <span class="type">string</span>[<span class="number">3</span>];
+
+<span class="comment">// 1. Loop to get input and store it</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; students.Length; i++) 
+{
+    Console.<span class="method">Write</span>(<span class="string">$"Enter student {i+1} name: "</span>);
+    students[i] = Console.<span class="method">ReadLine</span>();
+}
+
+Console.<span class="method">WriteLine</span>(<span class="string">"\n--- Student List ---"</span>);
+
+<span class="comment">// 2. Loop to display the stored data</span>
+<span class="keyword">foreach</span> (<span class="type">string</span> name <span class="keyword">in</span> students) 
+{
+    Console.<span class="method">WriteLine</span>(<span class="string">"Student: "</span> + name);
+}</pre>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>How it works:</strong><br>
+              <strong>Loop 1 (Input):</strong> We use a <code>for</code> loop to ask the user for a name 3 times. We use <code>students.Length</code> to ensure we fill the array perfectly. <code>students[i]</code> stores each name into slot 0, then slot 1, then slot 2.<br>
+              <strong>Loop 2 (Output):</strong> We use a <code>foreach</code> loop. It automatically grabs each string out of the <code>students</code> array one by one, temporarily calls it <code>name</code>, and prints it out.</p>
+
+              <div class="reallife-box">
+                <div class="rl-label">Reading Complex Loops</div>
+                <p><strong>Q: How do I trace a loop without getting confused?</strong><br>
+                <strong>A:</strong> Always read a loop like a story. Look at the starting point (<code>int i=0</code>), look at the stopping condition (<code>i &lt; 5</code>), and look at the step (<code>i++</code>). Then, ask yourself: <em>"What happens the very first time? What happens the second time? When does it finally break?"</em> Tracking variables on a piece of paper (a "trace table") makes complex loops easy to understand.</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -1755,28 +1908,147 @@ Console.<span class="method">WriteLine</span>(c.<span class="method">GetArea</sp
           </div>
         </div>
 
-        <!-- CONTROL FLOW -->
-        <div class="note-section" id="java-control">
-          <div class="note-section-title">Control Flow</div>
+        <!-- LOOPS -->
+        <div class="note-section" id="java-loops">
+          <div class="note-section-title">Loops</div>
 
           <div class="note-card">
-            <div class="note-card-title">Decision Making and Loops <span class="badge badge-covered">Covered</span></div>
+            <div class="note-card-title">Repeating Actions <span class="badge badge-covered">Covered</span></div>
             <div class="note-body">
-              <p>Control flow structures allow your program to make decisions (<code>if-else</code>) or repeat actions (<code>for</code> and <code>while</code> loops).</p>
+              <p>A <strong>loop</strong> executes a block of code multiple times. Using loops keeps your code clean and avoids redundancy.</p>
+              <div class="reallife-box">
+                <div class="rl-label">Real life example</div>
+                <p>Think of a washing machine's <strong>Spin Cycle</strong>. It doesn't just spin once; it spins continuously (loops) until the timer hits zero. The condition to stop is when the timer ends.</p>
+              </div>
+              <p>There are four common ways to loop in Java:</p>
+              
+              <div class="tip-box">
+                <div class="tip-label">1. The 'for' Loop</div>
+                <p>Use when you know <strong>exactly how many times</strong> you want the loop to run. The <code>for</code> loop has three distinct parts that control its flow:</p>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem; font-size: 0.9rem;">
+                  <li style="margin-bottom: 0.25rem;"><strong>Start <code>(int i = 1)</code>:</strong> This creates a counter variable. It only runs <em>once</em> at the very beginning.</li>
+                  <li style="margin-bottom: 0.25rem;"><strong>Stop <code>(i &lt;= 3)</code>:</strong> This is the condition. The loop keeps running as long as this is true. It checks this <em>before</em> every loop.</li>
+                  <li><strong>Step <code>(i++)</code>:</strong> This updates the counter (adds 1). It runs at the <em>end</em> of every loop.</li>
+                </ul>
+              </div>
               <div class="code-block">
-                <pre><span class="comment">// If-Else Statement</span>
-<span class="type">int</span> score = <span class="number">85</span>;
-<span class="keyword">if</span> (score >= <span class="number">50</span>) {
-    System.out.<span class="method">println</span>(<span class="string">"Passed"</span>);
-} <span class="keyword">else</span> {
-    System.out.<span class="method">println</span>(<span class="string">"Failed"</span>);
-}
-
-<span class="comment">// For Loop</span>
-<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) {
-    System.out.<span class="method">println</span>(<span class="string">"Iteration: "</span> + i);
+                <pre><span class="comment">// 1. Start at 1 | 2. Check if &lt;= 3 | 4. Increase by 1</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) {
+    <span class="comment">// 3. Run this code</span>
+    System.out.<span class="method">println</span>(<span class="string">"Count: "</span> + i);
 }</pre>
               </div>
+              
+              <div class="tip-box">
+                <div class="tip-label">2. The 'while' Loop</div>
+                <p>Use when the loop should run <strong>as long as a condition is true</strong>.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">int</span> health = <span class="number">3</span>;
+<span class="keyword">while</span> (health > <span class="number">0</span>) {
+    System.out.<span class="method">println</span>(<span class="string">"Still alive!"</span>);
+    health--; <span class="comment">// decreases health</span>
+}</pre>
+              </div>
+
+              <div class="tip-box">
+                <div class="tip-label">3. The 'do-while' Loop</div>
+                <p>This loop will <strong>always run at least once</strong> before checking the condition.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">int</span> attempts = <span class="number">0</span>;
+<span class="keyword">do</span> {
+    System.out.<span class="method">println</span>(<span class="string">"Trying connection..."</span>);
+    attempts++;
+} <span class="keyword">while</span> (attempts &lt; <span class="number">1</span>);</pre>
+              </div>
+
+              <div class="tip-box">
+                <div class="tip-label">4. The 'for-each' Loop</div>
+                <p>Used exclusively to loop through elements in an <strong>array</strong>.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">String</span>[] cars = {<span class="string">"Volvo"</span>, <span class="string">"BMW"</span>, <span class="string">"Ford"</span>};
+<span class="keyword">for</span> (<span class="type">String</span> i : cars) {
+    System.out.<span class="method">println</span>(i);
+}</pre>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="note-card">
+            <div class="note-card-title">Advanced Loop Techniques <span class="badge badge-covered">Covered</span></div>
+            <div class="note-body">
+              
+              <div class="tip-box">
+                <div class="tip-label">Nested Loops (Loops inside Loops)</div>
+                <p>You can place a loop inside another loop. The "inner loop" will execute all of its iterations for <em>every single iteration</em> of the "outer loop".</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2</span>; i++) { <span class="comment">// Outer loop (runs 2 times)</span>
+    System.out.<span class="method">println</span>(<span class="string">"Outer: "</span> + i);
+    
+    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">3</span>; j++) { <span class="comment">// Inner loop (runs 3 times per outer)</span>
+        System.out.<span class="method">println</span>(<span class="string">"  Inner: "</span> + j);
+    }
+}
+<span class="comment">// Total inner runs = 2 x 3 = 6 times</span></pre>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>How it works:</strong><br>
+              1. The outer loop starts with <code>i = 1</code>.<br>
+              2. It prints "Outer: 1".<br>
+              3. Then, the inner loop starts. It runs completely from <code>j = 1</code> to <code>j = 3</code>, printing "Inner: 1", "Inner: 2", and "Inner: 3".<br>
+              4. The inner loop finishes, and the outer loop moves to its second step (<code>i = 2</code>).<br>
+              5. The inner loop starts completely over again from 1 to 3. Think of it like hours (outer) and minutes (inner) on a clock.</p>
+
+              <div class="tip-box">
+                <div class="tip-label">Reversing a Loop</div>
+                <p>You don't always have to count forwards using <code>i++</code>. You can count backwards using <code>i--</code>. This is extremely useful for displaying arrays in reverse.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="comment">// Counting backwards from 5 down to 1</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">5</span>; i &gt; <span class="number">0</span>; i--) {
+    System.out.<span class="method">println</span>(i);
+}
+<span class="comment">// Output: 5, 4, 3, 2, 1</span></pre>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>How it works:</strong><br>
+              1. <strong>Start:</strong> We start with <code>i = 5</code> instead of 0.<br>
+              2. <strong>Stop:</strong> The condition is <code>i &gt; 0</code>. As long as the number is greater than zero, the loop keeps running.<br>
+              3. <strong>Step:</strong> Instead of <code>i++</code> (add 1), we use <code>i--</code> (subtract 1). It prints 5, subtracts 1 to become 4, prints 4, and so on until it hits 0 and stops.</p>
+
+              <div class="tip-box">
+                <div class="tip-label">Interactive Example: Storing Input in an Array</div>
+                <p>Here is a classic program: We use a <code>Scanner</code> and a loop to ask the user for 3 names, store them in an array, and then use a second loop to print them out.</p>
+              </div>
+              <div class="code-block">
+                <pre><span class="type">Scanner</span> scanner = <span class="keyword">new</span> <span class="type">Scanner</span>(System.in);
+<span class="type">String</span>[] students = <span class="keyword">new</span> <span class="type">String</span>[<span class="number">3</span>];
+
+<span class="comment">// 1. Loop to get input and store it</span>
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; students.length; i++) {
+    System.out.<span class="method">print</span>(<span class="string">"Enter student "</span> + (i+1) + <span class="string">" name: "</span>);
+    students[i] = scanner.<span class="method">nextLine</span>();
+}
+
+System.out.<span class="method">println</span>(<span class="string">"\n--- Student List ---"</span>);
+
+<span class="comment">// 2. Loop to display the stored data</span>
+<span class="keyword">for</span> (<span class="type">String</span> name : students) {
+    System.out.<span class="method">println</span>(<span class="string">"Student: "</span> + name);
+}</pre>
+              </div>
+              <p style="margin-top: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;"><strong>How it works:</strong><br>
+              <strong>Loop 1 (Input):</strong> We use a <code>for</code> loop to ask the user for a name 3 times. We use <code>students.length</code> to ensure we fill the array perfectly. <code>students[i]</code> stores each name into slot 0, then slot 1, then slot 2.<br>
+              <strong>Loop 2 (Output):</strong> We use an enhanced <code>for-each</code> loop. It automatically grabs each string out of the <code>students</code> array one by one, temporarily calls it <code>name</code>, and prints it out.</p>
+
+              <div class="reallife-box">
+                <div class="rl-label">Reading Complex Loops</div>
+                <p><strong>Q: How do I trace and understand a complex loop?</strong><br>
+                <strong>A:</strong> Never try to guess what a loop does by just glancing at it! Read it like a story. Identify the starting value (<code>int i=0</code>), the stopping condition (<code>i &lt; 5</code>), and how it steps (<code>i++</code>). If the loop contains complex math or nested loops, draw a small "trace table" on a piece of paper and track the variables on every single pass until the loop breaks.</p>
+              </div>
+
             </div>
           </div>
         </div>
